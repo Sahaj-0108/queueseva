@@ -1,0 +1,4 @@
+{"id":1,"username":"staff1","password_hash":"$2a$10$GoXaqar7KWPF3nnSiyvNkupj6cW.JUDuPU5UTaOJJBIRKr2VmiaG6","role":"staff","display_name":"Hospital Staff Member","doctor_id":null,"created_at":1792217064732,"_id":"5mAKZrtrS9Wanrzt"}
+{"id":3,"username":"dr.shah","password_hash":"$2a$10$nev0.a8iT6Pql3aSBO7g1u/6VP1LtQ0ZYQ/pGYROhxYKNw6AOUfPK","role":"doctor","display_name":"Dr. R. Shah","doctor_id":2,"created_at":1792217064732,"_id":"E35OdwZw0AoVfCAh"}
+{"id":4,"username":"admin","password_hash":"$2a$10$rcHs3mUKKvSDUGwvHyQ7q.3VkJDYpQ/DeIXtfjZjBoKbk6E2DzgSa","role":"admin","display_name":"Hospital Administrator","doctor_id":null,"created_at":1792217064732,"_id":"gGlpqA658aLfLBI4"}
+{"id":2,"username":"dr.mehta","password_hash":"$2a$10$nev0.a8iT6Pql3aSBO7g1u/6VP1LtQ0ZYQ/pGYROhxYKNw6AOUfPK","role":"doctor","display_name":"Dr. A. Mehta","doctor_id":1,"created_at":1792217064732,"_id":"nng4rtIFCGQwycIU"}
