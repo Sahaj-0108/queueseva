@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Dashboard — QueueCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span>QueueCare Doctor Portal</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <span style="font-weight: 700; color: var(--primary-dark);" id="doctorProfileHeader">Dr. A. Mehta</span>
+      <button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span>🩺</span> <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#assignedListSection" class="sidebar-link">
+            <span>👥</span> <span>My Patients</span>
+          </a>
+        </li>
+        <li>
+          <a href="/display.html" target="_blank" class="sidebar-link">
+            <span>🖥️</span> <span>Public Display ↗</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted);">
+        Role: <strong>DOCTOR</strong><br>
+        Enforced Patient Isolation (RBAC)
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <h2 style="color: var(--primary-dark); margin-bottom: 1.25rem;">Doctor Dashboard</h2>
+
+      <!-- Table: My Assigned Patients (Matches Screen 7) -->
+      <div class="card" id="assignedListSection">
+        <h3 class="card-title">My Assigned Patients</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Patient Name</th>
+                <th>Age</th>
+                <th>Department</th>
+                <th>Complaint</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="assignedPatientsBody">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted);">Loading assigned patients...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Card: Patient Details (Current Active Token) (Matches Screen 7) -->
+      <div class="card" id="activePatientCard" style="border-top: 4px solid var(--primary);">
+        <h3 class="card-title" id="detailsCardHeader">Patient Details (OPD-018)</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Name</span>
+            <div style="font-weight: 700; font-size: 1.1rem;" id="patName">Ramesh Patel</div>
+          </div>
+          <div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Age / Gender</span>
+            <div style="font-weight: 700; font-size: 1.1rem;" id="patAgeGender">45 / Male</div>
+          </div>
+          <div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Complaint</span>
+            <div style="font-weight: 700; font-size: 1.1rem;" id="patComplaint">Fever & cough</div>
+          </div>
+          <div>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Queue Status</span>
+            <div><span class="badge badge-service" id="patQueueStatus">In Service</span></div>
+          </div>
+        </div>
+
+        <!-- Highlighted Allergy Alert Box (Matches Screen 7) -->
+        <div class="allergy-alert" id="allergyAlertBox">
+          <span style="font-size: 1.3rem;">⚠️</span>
+          <span><strong>Allergy Warning:</strong> <span id="patAllergy">Penicillin (mild)</span></span>
+        </div>
+
+        <!-- Consultation Action Buttons -->
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+          <button class="btn btn-primary" id="markCompletedBtn" onclick="completeConsultation()">
+            ✓ Mark as Completed
+          </button>
+          <button class="btn btn-secondary" onclick="referPatient('LAB')">
+            🔬 Send to Laboratory
+          </button>
+          <button class="btn btn-secondary" onclick="referPatient('PHR')">
+            💊 Send to Pharmacy
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/doctor.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Queue Status — QueueCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span data-i18n="brand_name">QueueCare</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="nav_home">Home</a></li>
+      <li><a href="/book.html" data-i18n="nav_appointments">Appointments</a></li>
+      <li><a href="/token.html" data-i18n="nav_token">Token</a></li>
+      <li><a href="/track.html" class="active" data-i18n="nav_status">Queue Status</a></li>
+      <li><a href="/display.html" data-i18n="nav_display">Public Display</a></li>
+    </ul>
+    <div class="nav-actions">
+      <select id="langSelect" class="lang-select">
+        <option value="en">English (EN)</option>
+        <option value="gu">ગુજરાતી (GU)</option>
+        <option value="hi">हिंदी (HI)</option>
+      </select>
+      <div id="navAuthContainer">
+        <a href="/login.html" class="btn btn-primary btn-sm" data-i18n="nav_login">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2 style="color: var(--primary-dark); margin-bottom: 1.5rem; font-size: 1.6rem;" data-i18n="card_track_title">Your Queue Status</h2>
+
+    <!-- Search / Enter Token Bar -->
+    <div class="card" style="padding: 1.25rem;">
+      <form id="trackSearchForm" onsubmit="handleSearchToken(event)" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 180px;">
+          <input type="text" id="tokenInput" class="form-control" placeholder="Token Number (e.g. OPD-024)" required style="text-transform: uppercase;">
+        </div>
+        <div style="width: 160px;">
+          <input type="password" id="accessCodeInput" class="form-control" placeholder="4-Digit Code (1234)" maxlength="4">
+        </div>
+        <button type="submit" class="btn btn-primary" id="trackSubmitBtn" data-i18n="btn_track">Check Status</button>
+      </form>
+    </div>
+
+    <!-- Status Display Cards (Matches Image Screen 4) -->
+    <div id="statusCardsWrapper" class="split-layout">
+      <!-- Left Card: Your Token Status -->
+      <div class="card" style="border-top: 4px solid var(--primary);">
+        <h3 class="card-title" style="margin-bottom: 1.5rem;">Patient Token Details</h3>
+
+        <div style="margin-bottom: 1.25rem;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase;" data-i18n="lbl_your_token">Token Number</span>
+          <div style="font-size: 2.2rem; font-weight: 800; color: var(--primary-dark);" id="liveTokenNum">OPD-024</div>
+        </div>
+
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);" data-i18n="lbl_department">Department</span>
+          <strong id="liveDept">OPD</strong>
+        </div>
+
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);" data-i18n="lbl_status">Current Status</span>
+          <span class="badge badge-waiting" id="liveStatusBadge" data-i18n="badge_waiting">Waiting</span>
+        </div>
+
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);" data-i18n="lbl_your_position">Position In Queue</span>
+          <strong id="livePosition" style="font-size: 1.25rem; color: var(--primary);">5</strong>
+        </div>
+
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);" data-i18n="lbl_est_wait">Estimated Waiting Time</span>
+          <strong id="liveWaitTime" style="font-size: 1.1rem; color: var(--text-main);">~ 30 minutes</strong>
+        </div>
+
+        <div id="pauseNotice" style="display: none; background: #fff3cd; color: #856404; padding: 0.75rem; border-radius: 6px; margin-top: 1rem; font-size: 0.9rem;">
+          ⚠️ <strong>Notice:</strong> <span id="pauseNoticeMsg">Queue is paused</span>
+        </div>
+
+        <div style="margin-top: 1.5rem; background: #f8fafc; padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+          <span>🔄</span>
+          <span>Please keep this page open for real-time updates. (Auto-refreshes every 5s)</span>
+        </div>
+      </div>
+
+      <!-- Right Card: Queue Progress (OPD) -->
+      <div class="card" style="border-top: 4px solid var(--secondary);">
+        <h3 class="card-title" id="progressHeaderTitle">Queue Progress (OPD)</h3>
+
+        <div style="background: var(--bg-main); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem; text-align: center; border: 1px solid var(--border);">
+          <span style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase;" data-i18n="lbl_currently_serving">Currently Serving</span>
+          <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary);" id="liveCurrentlyServing">OPD-018</div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; display: block; margin-bottom: 0.5rem;" data-i18n="lbl_next_tokens">Next Tokens</span>
+          <div class="next-tokens-list" id="liveNextTokens">
+            <span class="next-token-chip">OPD-019</span>
+            <span class="next-token-chip">OPD-020</span>
+            <span class="next-token-chip">OPD-021</span>
+          </div>
+        </div>
+
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);" data-i18n="lbl_total_waiting">Total Waiting</span>
+          <strong id="liveTotalWaiting" style="font-size: 1.1rem;">12 patients</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/track.js"></script>
+</body>
+</html>

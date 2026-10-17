@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QueueCare — Smart Government Hospital Queue Management</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span data-i18n="brand_name">QueueCare</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" class="active" data-i18n="nav_home">Home</a></li>
+      <li><a href="/book.html" data-i18n="nav_appointments">Appointments</a></li>
+      <li><a href="/token.html" data-i18n="nav_token">Token</a></li>
+      <li><a href="/track.html" data-i18n="nav_status">Queue Status</a></li>
+      <li><a href="/display.html" data-i18n="nav_display">Public Display</a></li>
+    </ul>
+    <div class="nav-actions">
+      <select id="langSelect" class="lang-select">
+        <option value="en">English (EN)</option>
+        <option value="gu">ગુજરાતી (GU)</option>
+        <option value="hi">हिंदी (HI)</option>
+      </select>
+      <div id="navAuthContainer">
+        <a href="/login.html" class="btn btn-primary btn-sm" data-i18n="nav_login">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Hero Banner -->
+    <div class="hero-card">
+      <div class="hero-text">
+        <h1 data-i18n="hero_title">Smart Queue Management for Government Hospitals</h1>
+        <p data-i18n="hero_subtitle">Book appointments, get tokens, and track your queue status — all in one place.</p>
+      </div>
+      <div class="hero-visual">
+        <svg class="hero-img" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg">
+          <rect width="320" height="200" rx="12" fill="#e0f2fe"/>
+          <!-- Hospital Building Silhouette -->
+          <rect x="70" y="50" width="180" height="150" fill="#ffffff" stroke="#90caf9" stroke-width="2"/>
+          <rect x="110" y="25" width="100" height="35" fill="#1976d2" rx="4"/>
+          <text x="160" y="48" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">Government Hospital</text>
+          <!-- Red Cross -->
+          <rect x="153" y="70" width="14" height="24" fill="#ef4444" rx="2"/>
+          <rect x="148" y="75" width="24" height="14" fill="#ef4444" rx="2"/>
+          <!-- Windows -->
+          <rect x="90" y="110" width="24" height="20" fill="#bae6fd" rx="2"/>
+          <rect x="125" y="110" width="24" height="20" fill="#bae6fd" rx="2"/>
+          <rect x="170" y="110" width="24" height="20" fill="#bae6fd" rx="2"/>
+          <rect x="205" y="110" width="24" height="20" fill="#bae6fd" rx="2"/>
+          <!-- Main Entrance -->
+          <rect x="145" y="150" width="30" height="50" fill="#3b82f6" rx="3"/>
+          <circle cx="50" cy="160" r="15" fill="#bbf7d0"/>
+          <circle cx="270" cy="160" r="15" fill="#bbf7d0"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 4 Quick Action Cards (Grid) -->
+    <div class="action-grid">
+      <!-- Card 1: Book Appointment -->
+      <a href="/book.html" class="action-card">
+        <div class="card-icon">📅</div>
+        <h3><span data-i18n="card_book_title">Book Appointment</span> <small data-i18n="card_book_sub">(Online)</small></h3>
+        <p data-i18n="card_book_desc">Book with your preferred doctor in advance.</p>
+      </a>
+
+      <!-- Card 2: Generate Token -->
+      <a href="/token.html" class="action-card">
+        <div class="card-icon">🎟️</div>
+        <h3><span data-i18n="card_token_title">Generate Token</span> <small data-i18n="card_token_sub">(For Walk-ins)</small></h3>
+        <p data-i18n="card_token_desc">Get an instant queue token upon arrival.</p>
+      </a>
+
+      <!-- Card 3: Check Queue Status -->
+      <a href="/track.html" class="action-card">
+        <div class="card-icon">⏱️</div>
+        <h3><span data-i18n="card_track_title">Check Queue Status</span> <small data-i18n="card_track_sub">(Your Token)</small></h3>
+        <p data-i18n="card_track_desc">Live position & estimated wait time updates.</p>
+      </a>
+
+      <!-- Card 4: View Public Queue -->
+      <a href="/display.html" class="action-card">
+        <div class="card-icon">🖥️</div>
+        <h3><span data-i18n="card_display_title">View Public Queue</span> <small data-i18n="card_display_sub">(Department-wise)</small></h3>
+        <p data-i18n="card_display_desc">Live digital waiting board display.</p>
+      </a>
+    </div>
+
+    <!-- Permanent Emergency Banner -->
+    <div class="emergency-banner">
+      <span class="emergency-icon">⚠️</span>
+      <div data-i18n="emergency_banner">
+        Emergency? Please follow hospital triage and staff instructions. This system is not for emergency cases.
+      </div>
+    </div>
+  </div>
+
+  <footer style="text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.9rem; border-top: 1px solid #e2e8f0; background: #ffffff;">
+    <p>© 2026 QueueCare — Smart Government Hospital Queue Management · Cyber Samvad Hackathon 2026</p>
+    <p style="margin-top: 0.25rem;"><small>Built with Security by Design · Role-Based Access · Patient Data Protection</small></p>
+  </footer>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/api.js"></script>
+</body>
+</html>

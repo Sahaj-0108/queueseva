@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueSeva — Smart Government Hospital Management & Queue System</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body>
+
+    <!-- 1. Top Emergency Banner -->
+    <div class="emergency-banner">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span>🚨 <strong>EMERGENCY:</strong></span>
+            <span data-i18n="emergency_text">Medical Emergency? Do not wait for an online appointment. Proceed directly to Emergency Red Zone Gate 1.</span>
+        </div>
+        <button onclick="App.triggerEmergency()">
+            <span data-i18n="emergency_btn">EMERGENCY ASSISTANCE</span> ➔
+        </button>
+    </div>
+
+    <!-- 2. Application Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <a href="/" class="logo-group">
+                <div class="logo-emblem">QS</div>
+                <div class="logo-text">
+                    <h1 data-i18n="app_title">QueueSeva</h1>
+                    <span data-i18n="app_subtitle">Smart Government Hospital Management & Healthcare Services</span>
+                </div>
+            </a>
+
+            <!-- Global Controls: Accessibility, Contrast, Language, User Profile -->
+            <div class="header-controls">
+                <!-- Accessibility Toggle -->
+                <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; cursor:pointer;">
+                    <input type="checkbox" id="toggleAccessibility">
+                    <span data-i18n="accessibility_mode">Accessibility (Large Text)</span>
+                </label>
+
+                <!-- High Contrast Toggle -->
+                <label style="display:flex; align-items:center; gap:6px; font-size:0.85rem; cursor:pointer;">
+                    <input type="checkbox" id="toggleContrast">
+                    <span data-i18n="high_contrast">High Contrast</span>
+                </label>
+
+                <!-- Multilingual Switcher -->
+                <select id="langSelector" class="pill-select" onchange="setLanguage(this.value)">
+                    <option value="en">English (EN)</option>
+                    <option value="hi">हिन्दी (Hindi)</option>
+                    <option value="gu">ગુજરાતી (Gujarati)</option>
+                </select>
+
+                <!-- Current User Profile & Fast Demo Switcher -->
+                <div id="currentUserDisplay"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. Main Container -->
+    <main class="app-container">
+
+        <!-- Role Navigation Ribbon -->
+        <nav class="role-ribbon">
+            <button class="role-tab active" data-role="patient" onclick="App.quickLoginAs('patient')">
+                👤 Patient Dashboard
+            </button>
+            <button class="role-tab" data-role="doctor" onclick="App.quickLoginAs('doctor')">
+                👨‍⚕️ Doctor OPD
+            </button>
+            <button class="role-tab" data-role="staff" onclick="App.quickLoginAs('staff')">
+                🧑‍💼 Staff & Registration
+            </button>
+            <button class="role-tab" data-role="lab" onclick="App.quickLoginAs('lab')">
+                🧪 Laboratory
+            </button>
+            <button class="role-tab" data-role="pharmacy" onclick="App.quickLoginAs('pharmacy')">
+                💊 Pharmacy
+            </button>
+            <button class="role-tab" data-role="bloodbank" onclick="App.quickLoginAs('bloodbank')">
+                🩸 Blood Bank
+            </button>
+            <button class="role-tab" data-role="admin" onclick="App.quickLoginAs('admin')">
+                📊 Admin & Cybersecurity
+            </button>
+        </nav>
+
+        <!-- Live Token Ticker Bar (Visible to all) -->
+        <div class="token-ticker-card">
+            <div>
+                <span class="badge badge-warning" id="queuePauseBadge" style="display: none; margin-bottom: 8px;"></span>
+                <h2 style="font-size: 1.4rem;" data-i18n="live_token_title">Current Live Token Being Served</h2>
+                <p style="opacity: 0.9; font-size: 0.9rem;">General Medicine OPD (Room 3) • Civil Hospital</p>
+            </div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <div class="token-big-box">
+                    <div class="label" data-i18n="live_token_title">Active Token</div>
+                    <div class="number" id="liveCurrentToken">OPD-012</div>
+                </div>
+                <div class="token-big-box">
+                    <div class="label">Waiting in Queue</div>
+                    <div class="number" id="liveQueueWaiting">4 Patients</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GPS Geofence & Proximity Detection Box -->
+        <div id="geofenceStatusBox" style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; padding: 12px 18px; border-radius: 8px;">
+                <div>
+                    <strong>📍 Location Awareness:</strong> Hospital Geofence monitoring is active.
+                </div>
+                <button class="btn btn-sm btn-secondary" onclick="GeofenceDetector.simulateArrival()">
+                    Simulate Hospital Arrival (110m)
+                </button>
+            </div>
+        </div>
+
+        <!-- ==========================================================================
+             VIEW 1: PATIENT DASHBOARD
+             ========================================================================== -->
+        <section id="view_patient" class="dashboard-view">
+            <!-- Active Token Card for current patient -->
+            <div id="patientActiveTokenBox" style="display: none;"></div>
+
+            <div class="dashboard-grid">
+                <!-- Smart Appointment Booking Card -->
+                <div class="card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🧠</span> <span data-i18n="book_appointment_title">Book Smart Hospital Appointment</span>
+                        </div>
+                        <span class="badge badge-info">Smart Time Suggestion</span>
+                    </div>
+
+                    <div style="margin-bottom: 14px; color: #475569; font-size: 0.9rem;" data-i18n="when_to_visit">
+                        When would you prefer to visit the hospital?
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+                        <div class="form-group">
+                            <label class="form-label">Preferred Date</label>
+                            <input type="date" id="bookingDateInput" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="preferred_time_range">Preferred Time Range</label>
+                            <select id="bookingTimeRangeSelect" class="form-control">
+                                <option value="morning_early">8:00 AM – 9:00 AM</option>
+                                <option value="morning_mid" selected>9:00 AM – 10:00 AM</option>
+                                <option value="morning_late">10:00 AM – 11:00 AM</option>
+                                <option value="noon_early">11:00 AM – 12:00 PM</option>
+                                <option value="noon_mid">12:00 PM – 1:00 PM</option>
+                                <option value="afternoon_early">1:00 PM – 2:00 PM</option>
+                                <option value="afternoon_mid">2:00 PM – 3:00 PM</option>
+                                <option value="afternoon_late">3:00 PM – 4:00 PM</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" data-i18n="select_dept">Department</label>
+                            <select id="bookingDeptSelect" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 6px;">
+                        <label style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; cursor: pointer;">
+                            <input type="checkbox" id="bookingAccessibilityCheck">
+                            <span data-i18n="accessibility_req">Requires Wheelchair / Elevator / Special Senior Assistance</span>
+                        </label>
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        <button class="btn btn-primary" onclick="App.requestSmartRecommendation()">
+                            <span data-i18n="find_slot_btn">Find Smart Recommendation</span>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Recommendation Box -->
+                    <div id="recommendationResultBox" style="display: none;"></div>
+                </div>
+
+                <!-- Patient Profile & Emergency Contact Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">👤 Patient Profile</div>
+                        <span class="badge badge-success">ABHA Connected</span>
+                    </div>
+                    <div style="font-size: 0.9rem; display: flex; flex-direction: column; gap: 8px;">
+                        <div><strong>Name:</strong> Ramesh Patel (58 yrs, Male)</div>
+                        <div><strong>Phone:</strong> +91 98765 43210</div>
+                        <div><strong>Emergency Contact:</strong> Kavita Patel (+91 98765 43211)</div>
+                        <div><strong>Recorded Allergies:</strong> <span style="color: #dc2626; font-weight: bold;">Penicillin, Sulfa</span></div>
+                        <div><strong>Authorized Attendant:</strong> Enabled (Family Support)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirmed Digital Appointments -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>📋</span> <span data-i18n="digital_card">My Digital Appointment Cards</span>
+                    </div>
+                </div>
+                <div id="patientAppointmentsList">
+                    <p style="color: #64748b;">Loading appointments...</p>
+                </div>
+            </div>
+
+            <!-- Indoor Hospital Navigation & Transit Section -->
+            <div class="dashboard-grid">
+                <div class="card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🗺️</span> <span data-i18n="hospital_map">Interactive Hospital Indoor Navigation</span>
+                        </div>
+                        <span class="badge badge-info">Click any room to draw walking route</span>
+                    </div>
+                    <div id="hospitalMapContainer"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🚌</span> <span data-i18n="transport_title">Nearby Public Transport</span>
+                        </div>
+                    </div>
+                    <div id="transitGuideContainer"></div>
+                </div>
+            </div>
+
+            <!-- Prescriptions, Diagnostic Reports & Digital Invoices -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🧪</span> <span data-i18n="lab_reports_title">Laboratory Orders & Reports</span>
+                        </div>
+                    </div>
+                    <div id="patientLabReportsList"></div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>💳</span> <span data-i18n="billing_title">Digital Bills & Receipts</span>
+                        </div>
+                    </div>
+                    <div id="patientBillsList"></div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             VIEW 2: DOCTOR DASHBOARD
+             ========================================================================== -->
+        <section id="view_doctor" class="dashboard-view" style="display: none;">
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>👨‍⚕️</span> Dr. Aarav Mehta (MD, General Medicine) — OPD Room 3
+                    </div>
+                    <button class="btn btn-primary" onclick="App.doctorCallNext()">
+                        <span data-i18n="call_next">Call Next Patient</span> ➔
+                    </button>
+                </div>
+
+                <!-- Current Active Patient Box -->
+                <div id="doctorCurrentPatientBox" style="margin-bottom: 16px;"></div>
+
+                <!-- Clinical Consultation & Digital Prescription Form -->
+                <div id="doctorConsultationForm" style="display: none; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px;">
+                    <h4 style="color: #0284c7; margin-bottom: 12px;">📝 Digital Consultation & Prescription</h4>
+                    <input type="hidden" id="activeDoctorTokenInput">
+
+                    <div class="form-group">
+                        <label class="form-label">Clinical Observations & Diagnosis Notes</label>
+                        <textarea id="doctorNotesInput" class="form-control" rows="2" placeholder="Patient reports high fever for 3 days, body ache..."></textarea>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                        <div class="form-group">
+                            <label class="form-label">Prescribe Oral Medication 1</label>
+                            <input type="text" id="docRxMed1" class="form-control" value="Paracetamol 500mg Tablets">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prescribe Oral Medication 2</label>
+                            <input type="text" id="docRxMed2" class="form-control" value="Pantoprazole 40mg (Gastro-Resistant)">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px;">
+                        <div class="form-group">
+                            <label class="form-label">Diagnostic Laboratory Referral</label>
+                            <select id="docLabOrderSelect" class="form-control">
+                                <option value="">No Lab Test Required</option>
+                                <option value="Complete Blood Count (CBC)" selected>Complete Blood Count (CBC) (₹100)</option>
+                                <option value="Liver Function Test (LFT)">Liver Function Test (LFT) (₹180)</option>
+                                <option value="Fasting Blood Sugar (FBS)">Fasting Blood Sugar (FBS) (₹50)</option>
+                                <option value="Chest X-Ray">Chest X-Ray (PA View) (₹150)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="display: flex; align-items: center; margin-top: 28px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" id="docBloodRequestCheck">
+                                <span style="font-weight: 600; color: #dc2626;">Order Blood Bank Transfusion (O+ PRBC)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
+                        <button class="btn btn-success" onclick="App.doctorFinishConsultation()">
+                            Finalize Consultation & Dispatch Orders
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor's Patient Waiting Queue -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Today's Consultation Queue</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Token</th>
+                                <th>Patient Name</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doctorQueueTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             VIEW 3: STAFF & REGISTRATION DASHBOARD
+             ========================================================================== -->
+        <section id="view_staff" class="dashboard-view" style="display: none;">
+            <div class="dashboard-grid">
+                <!-- Walk-in Token Registration -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🧑‍💼</span> <span data-i18n="walkin_register">Register Walk-in Patient</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Patient Full Name</label>
+                        <input type="text" id="walkinNameInput" class="form-control" placeholder="e.g. Meena Dave">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mobile Number</label>
+                        <input type="tel" id="walkinPhoneInput" class="form-control" placeholder="e.g. 9825100004">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority Handling</label>
+                        <select id="walkinPrioritySelect" class="form-control">
+                            <option value="normal">Normal Walk-in</option>
+                            <option value="urgent">Urgent / Elderly / High Fever Priority</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Reason for Priority (Audit Logged)</label>
+                        <input type="text" id="walkinPriorityReasonInput" class="form-control" placeholder="e.g. Senior Citizen 75+ with chills">
+                    </div>
+                    <button class="btn btn-primary" onclick="App.staffCreateWalkin()">Generate Token</button>
+                </div>
+
+                <!-- Public Counter Audio Announcement Console -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>📢</span> <span data-i18n="announce_token">Public Token Announcer</span>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 12px;">
+                        Broadcast audible token announcements in English, Gujarati, or Hindi across hospital hall speakers.
+                    </p>
+                    <div class="form-group">
+                        <label class="form-label">Token Number to Call</label>
+                        <input type="text" id="staffCallTokenInput" class="form-control" value="OPD-012">
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-primary" onclick="App.staffCallToken()">
+                            🔊 Announce Token Now
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 14px;">
+                        <label class="form-label">Emergency Queue Controls</label>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn btn-danger btn-sm" onclick="App.toggleQueuePause('pause')">Pause OPD Queue</button>
+                            <button class="btn btn-success btn-sm" onclick="App.toggleQueuePause('resume')">Resume Queue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             VIEW 4: LABORATORY DASHBOARD
+             ========================================================================== -->
+        <section id="view_lab" class="dashboard-view" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>🧪</span> Central Pathology Laboratory & Diagnostics
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Test Name</th>
+                                <th>Patient Name</th>
+                                <th>Status</th>
+                                <th>Fee</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="labOrdersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             VIEW 5: PHARMACY DASHBOARD
+             ========================================================================== -->
+        <section id="view_pharmacy" class="dashboard-view" style="display: none;">
+            <div class="dashboard-grid">
+                <div class="card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>💊</span> Jan Aushadhi Pharmacy — Prescription Queue
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Rx ID</th>
+                                    <th>Patient</th>
+                                    <th>Medicines</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pharmacyOrdersTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Medicine Inventory</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Medicine</th>
+                                    <th>Generic</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pharmacyInventoryTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             VIEW 6: BLOOD BANK DASHBOARD
+             ========================================================================== -->
+        <section id="view_bloodbank" class="dashboard-view" style="display: none;">
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>🩸</span> Blood Bank Inventory & Units
+                    </div>
+                </div>
+                <div id="bloodInventoryGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;"></div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Clinical Blood Requests</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Blood Group</th>
+                                <th>Units</th>
+                                <th>Patient</th>
+                                <th>Urgency</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bloodRequestsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             VIEW 7: ADMIN & CYBERSECURITY DASHBOARD
+             ========================================================================== -->
+        <section id="view_admin" class="dashboard-view" style="display: none;">
+            <!-- Operations Analytics Summary -->
+            <div id="adminMetricsGrid" class="dashboard-grid"></div>
+
+            <div class="dashboard-grid">
+                <!-- Live Audit Trail -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🛡️</span> System Audit Trail (Tamper-Resistant)
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="max-height: 380px;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                    <th>User</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminAuditTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cybersecurity Event Log -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span>🔐</span> Cybersecurity Event Monitor
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="max-height: 380px;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Severity</th>
+                                    <th>Event Type</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminSecurityTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="modal-overlay">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #fee2e2; padding-bottom: 12px; margin-bottom: 12px;">
+                <h3 style="color: #dc2626;">🚨 Emergency Assistance Protocol</h3>
+                <button class="btn btn-sm btn-secondary" onclick="document.getElementById('emergencyModal').classList.remove('active')">✕ Close</button>
+            </div>
+            <div id="emergencyModalInfo"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer"></div>
+
+    <!-- Client Scripts -->
+    <script src="./static/js/i18n.js"></script>
+    <script src="./static/js/audio.js"></script>
+    <script src="./static/js/navigation.js"></script>
+    <script src="./static/js/geofence.js"></script>
+    <script src="./static/js/mock_backend.js"></script>
+    <script src="./static/js/app.js"></script>
+</body>
+</html>

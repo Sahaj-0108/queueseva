@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin & Security Dashboard — QueueCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span>QueueCare Admin & Security Audit</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <span style="font-weight: 700; color: var(--primary-dark);" id="adminHeaderName">Administrator</span>
+      <button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#" class="sidebar-link active">
+            <span>📈</span> <span>Hospital Analytics</span>
+          </a>
+        </li>
+        <li>
+          <a href="#auditLogSection" class="sidebar-link">
+            <span>📜</span> <span>Audit Log</span>
+          </a>
+        </li>
+        <li>
+          <a href="#securityEventsSection" class="sidebar-link">
+            <span>🛡️</span> <span>Security Events</span>
+          </a>
+        </li>
+        <li>
+          <a href="#securityConsoleSection" class="sidebar-link">
+            <span>🧪</span> <span>Security Test Console</span>
+          </a>
+        </li>
+        <li>
+          <a href="/staff.html" class="sidebar-link">
+            <span>👥</span> <span>Staff Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/display.html" target="_blank" class="sidebar-link">
+            <span>🖥️</span> <span>Public Display ↗</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted);">
+        Role: <strong>ADMIN</strong><br>
+        Full Audit & Compliance Access
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+      <h2 style="color: var(--primary-dark); margin-bottom: 1.5rem;">Hospital Analytics & Security Center</h2>
+
+      <!-- Metrics Summary -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Appointments Booked</div>
+          <div class="stat-val" id="admBooked">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Checked In Today</div>
+          <div class="stat-val" style="color: var(--warning);" id="admCheckedIn">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Consultations Completed</div>
+          <div class="stat-val" style="color: var(--success);" id="admCompleted">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg OPD Wait Time</div>
+          <div class="stat-val" style="color: #0288d1;" id="admAvgWait">7 min</div>
+        </div>
+      </div>
+
+      <!-- Department Queue Throughput -->
+      <div class="card">
+        <h3 class="card-title">Department Queue Performance</h3>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Waiting</th>
+                <th>In Service</th>
+                <th>Served Today</th>
+                <th>Skipped</th>
+                <th>Total Processed</th>
+              </tr>
+            </thead>
+            <tbody id="deptStatsBody">
+              <tr><td colspan="6" style="text-align: center;">Loading department statistics...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Audit Log Section -->
+      <div class="card" id="auditLogSection">
+        <h3 class="card-title">
+          <span>📜 System Audit Log (Immutable Record of Sensitive Actions)</span>
+          <button class="btn btn-outline btn-sm" onclick="loadAuditLogs()">Refresh</button>
+        </h3>
+        <div class="table-responsive" style="max-height: 380px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>User / Role</th>
+                <th>Action</th>
+                <th>Target</th>
+                <th>Details</th>
+                <th>IP Address</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <tr><td colspan="6" style="text-align: center;">Loading audit records...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Security Events Section -->
+      <div class="card" id="securityEventsSection">
+        <h3 class="card-title">
+          <span>🛡️ Security Events & Rejected Requests Monitor (401, 403, 409, 422, 429)</span>
+          <button class="btn btn-outline btn-sm" onclick="loadSecurityEvents()">Refresh</button>
+        </h3>
+        <div class="table-responsive" style="max-height: 380px;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>IP</th>
+                <th>User</th>
+                <th>Method & Path</th>
+                <th>Status Code</th>
+                <th>Rejection Reason</th>
+              </tr>
+            </thead>
+            <tbody id="securityTableBody">
+              <tr><td colspan="6" style="text-align: center;">Loading security events...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Live Cybersecurity Verification Console (Admin Exclusive) -->
+      <div class="card" id="securityConsoleSection">
+        <h3 class="card-title" style="color: var(--primary-dark);">
+          <span>🧪 Live Cybersecurity Defense Test Console (Admin Only)</span>
+        </h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem;">
+          Trigger and verify server-side defenses in real-time. Blocked actions will immediately register in the Security Events table above.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
+          <button class="btn btn-outline btn-sm" onclick="triggerAdminSecurityTest('401')">
+            1. Test 401 Unauthorized
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="triggerAdminSecurityTest('403')">
+            2. Test 403 Forbidden
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="triggerAdminSecurityTest('409')">
+            3. Test 409 State Conflict
+          </button>
+          <button class="btn btn-outline btn-sm" onclick="triggerAdminSecurityTest('422')">
+            4. Test 422 Invalid Input (-5 age)
+          </button>
+        </div>
+
+        <div style="background: #0f172a; color: #38bdf8; padding: 1.25rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.9rem; min-height: 120px; overflow-x: auto;">
+          <div style="color: #94a3b8; margin-bottom: 0.5rem;">// Server Security Response Log:</div>
+          <pre id="adminSecurityConsoleLog" style="margin: 0; white-space: pre-wrap; word-break: break-all;">Click any button above to test the server's security defenses...</pre>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

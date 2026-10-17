@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Dashboard — QueueCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span>QueueCare Staff Portal</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <span style="font-size: 0.95rem; font-weight: 600; color: var(--primary-dark);" id="staffWelcomeName">Welcome, Staff Member</span>
+      <button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>
+    </div>
+  </nav>
+
+  <div class="dashboard-layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#" class="sidebar-link active" onclick="switchView('queue', this)">
+            <span>📊</span> <span>Dashboard & Queue</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link" onclick="switchView('appointments', this)">
+            <span>📅</span> <span>Appointments & Check-in</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-link" onclick="openWalkInModal()">
+            <span>➕</span> <span>Register Walk-in</span>
+          </a>
+        </li>
+        <li>
+          <a href="/display.html" target="_blank" class="sidebar-link">
+            <span>🖥️</span> <span>Public Display ↗</span>
+          </a>
+        </li>
+      </ul>
+
+      <div style="padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted);">
+        Role: <strong>STAFF</strong><br>
+        RBAC Secured Session
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <!-- Top Metrics Stats (Matches Image Screen 6) -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Appointments</div>
+          <div class="stat-val" id="statAppointments">24</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Waiting Patients</div>
+          <div class="stat-val" style="color: var(--warning);" id="statWaiting">18</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">In Service</div>
+          <div class="stat-val" style="color: var(--success);" id="statInService">3</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Today Served</div>
+          <div class="stat-val" style="color: #0288d1;" id="statServed">42</div>
+        </div>
+      </div>
+
+      <!-- VIEW 1: Department Queues -->
+      <section id="queueView">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+          <!-- Department Tabs -->
+          <div class="dept-tabs">
+            <button class="dept-tab-btn active" onclick="changeDept('OPD', this)">OPD</button>
+            <button class="dept-tab-btn" onclick="changeDept('LAB', this)">Laboratory</button>
+            <button class="dept-tab-btn" onclick="changeDept('PHR', this)">Pharmacy</button>
+          </div>
+
+          <!-- Queue Control Buttons -->
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="btn btn-primary" onclick="callNextTokenAction()">📢 Call Next</button>
+            <button class="btn btn-secondary" id="pauseQueueBtn" onclick="togglePauseModal()">⏸️ Pause Queue</button>
+          </div>
+        </div>
+
+        <div id="deptPauseAlert" style="display: none; background: #fff3cd; color: #856404; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #ffeeba;">
+          ⚠️ <strong>Queue is currently Paused:</strong> <span id="deptPauseMsgText">Doctor on rounds</span>
+          <button class="btn btn-sm btn-outline" style="margin-left: 1rem;" onclick="resumeQueueAction()">Resume Queue Now</button>
+        </div>
+
+        <!-- Department Queue Table (Matches Screen 6) -->
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Patient Name</th>
+                <th>Position</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="queueTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted);">Loading queue data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VIEW 2: Appointments & Check-In -->
+      <section id="appointmentsView" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+          <h3 style="color: var(--primary-dark);">Today's Appointments</h3>
+          <input type="text" id="appointmentSearch" class="form-control" placeholder="Search by name, phone or ID..." style="max-width: 300px;" oninput="filterAppointments()">
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Appointment ID</th>
+                <th>Patient Name</th>
+                <th>Age / Gender</th>
+                <th>Doctor</th>
+                <th>Slot Time</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="appointmentsTableBody">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted);">Loading appointments...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal: Pause Queue -->
+  <div class="modal-backdrop" id="pauseModal">
+    <div class="modal-dialog">
+      <h3 style="margin-bottom: 1rem; color: var(--primary-dark);">Pause Queue</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+        Provide a broadcast reason that will be displayed to waiting patients and on public display screens.
+      </p>
+      <div class="form-group">
+        <label class="form-label">Pause Reason / Message</label>
+        <input type="text" id="pauseReasonInput" class="form-control" placeholder="e.g. Doctor on ward rounds, resumes 11:30" maxlength="100">
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn btn-secondary" onclick="togglePauseModal()">Cancel</button>
+        <button class="btn btn-danger" onclick="submitPauseQueue()">Confirm Pause</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Move Up / Urgent Priority Handling -->
+  <div class="modal-backdrop" id="urgentModal">
+    <div class="modal-dialog">
+      <h3 style="margin-bottom: 1rem; color: #dc2626;">Urgent Priority Handling</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">
+        Moving token <strong id="urgentTokenCodeText">OPD-024</strong> to the front of the queue requires a recorded reason for the security audit log.
+      </p>
+      <div class="form-group">
+        <label class="form-label">Select Justification *</label>
+        <select id="urgentReasonSelect" class="form-control">
+          <option value="Senior citizen">Senior citizen (60+ years)</option>
+          <option value="Pregnant">Pregnant patient</option>
+          <option value="Person with disability">Person with disability</option>
+          <option value="Staff-directed per hospital procedure">Staff-directed per hospital procedure</option>
+        </select>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+        <button class="btn btn-secondary" onclick="closeUrgentModal()">Cancel</button>
+        <button class="btn btn-danger" onclick="submitMoveUp()">Move to Urgent Front</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Register Walk-In -->
+  <div class="modal-backdrop" id="walkInModal">
+    <div class="modal-dialog">
+      <h3 style="margin-bottom: 1rem; color: var(--primary-dark);">Register Walk-In Patient</h3>
+      <form onsubmit="handleStaffWalkIn(event)">
+        <div class="form-group">
+          <label class="form-label">Department</label>
+          <select id="staffWalkInDept" class="form-control">
+            <option value="OPD">OPD Consultation</option>
+            <option value="LAB">Laboratory</option>
+            <option value="PHR">Pharmacy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Patient Name *</label>
+          <input type="text" id="staffWalkInName" class="form-control" required placeholder="e.g. Ramesh Patel">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Age *</label>
+            <input type="number" id="staffWalkInAge" class="form-control" min="0" max="120" required placeholder="45">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Gender *</label>
+            <select id="staffWalkInGender" class="form-control">
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+              <option value="O">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Main Complaint</label>
+          <select id="staffWalkInComplaint" class="form-control">
+            <option value="Fever and cough">Fever and cough</option>
+            <option value="Headache">Headache</option>
+            <option value="Blood Pressure">Blood Pressure</option>
+            <option value="Diabetes">Diabetes</option>
+            <option value="Joint Pain">Joint Pain</option>
+            <option value="Back pain">Back pain</option>
+            <option value="Stomach">Stomach</option>
+            <option value="Skin">Skin</option>
+            <option value="General Check-up">General Check-up</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeWalkInModal()">Cancel</button>
+          <button type="submit" class="btn btn-success">Issue Token</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/staff.js"></script>
+</body>
+</html>

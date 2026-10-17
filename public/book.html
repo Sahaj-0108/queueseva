@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Doctor Appointment — QueueCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span data-i18n="brand_name">QueueCare</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="nav_home">Home</a></li>
+      <li><a href="/book.html" class="active" data-i18n="nav_appointments">Appointments</a></li>
+      <li><a href="/token.html" data-i18n="nav_token">Token</a></li>
+      <li><a href="/track.html" data-i18n="nav_status">Queue Status</a></li>
+      <li><a href="/display.html" data-i18n="nav_display">Public Display</a></li>
+    </ul>
+    <div class="nav-actions">
+      <select id="langSelect" class="lang-select">
+        <option value="en">English (EN)</option>
+        <option value="gu">ગુજરાતી (GU)</option>
+        <option value="hi">हिंदी (HI)</option>
+      </select>
+      <div id="navAuthContainer">
+        <a href="/login.html" class="btn btn-primary btn-sm" data-i18n="nav_login">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+      <h2 style="color: var(--primary-dark); font-size: 1.6rem; margin: 0;">Book a Doctor Appointment</h2>
+      <a href="/booking.html" class="btn btn-outline btn-sm">🔍 View or Cancel Existing Booking</a>
+    </div>
+
+    <!-- 5-Step Wizard -->
+    <div class="wizard-steps">
+      <div class="wizard-step active" id="stepIndicator1">
+        <div class="step-circle">1</div>
+        <div class="step-label" data-i18n="step_dept">Select Department</div>
+      </div>
+      <div class="wizard-step" id="stepIndicator2">
+        <div class="step-circle">2</div>
+        <div class="step-label" data-i18n="step_doc">Select Doctor</div>
+      </div>
+      <div class="wizard-step" id="stepIndicator3">
+        <div class="step-circle">3</div>
+        <div class="step-label" data-i18n="step_slot">Choose Slot</div>
+      </div>
+      <div class="wizard-step" id="stepIndicator4">
+        <div class="step-circle">4</div>
+        <div class="step-label" data-i18n="step_details">Patient Details</div>
+      </div>
+      <div class="wizard-step" id="stepIndicator5">
+        <div class="step-circle">5</div>
+        <div class="step-label" data-i18n="step_confirm">Confirm</div>
+      </div>
+    </div>
+
+    <!-- Booking Form & Summary Split Layout -->
+    <div class="split-layout">
+      <!-- Left: Step Panels -->
+      <div class="card" id="bookingFormContainer">
+        <!-- Step 1 & 2 & 3: Department, Doctor, Date & Slots -->
+        <div id="stepPanel1">
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_department">Select Department</label>
+            <select id="deptSelect" class="form-control">
+              <option value="OPD">OPD Consultation</option>
+              <option value="LAB">Laboratory</option>
+              <option value="PHR">Pharmacy</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_doctor">Select Doctor</label>
+            <select id="doctorSelect" class="form-control">
+              <option value="">Loading doctors...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_date">Select Date</label>
+            <input type="date" id="dateInput" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_available_slots">Available Slots</label>
+            <div id="slotsGrid" class="slots-grid">
+              <div style="color: var(--text-muted); font-size: 0.9rem;">Select doctor and date to load available slots.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Patient Details -->
+        <div id="stepPanel2" style="display: none;">
+          <h3 style="color: var(--primary-dark); margin-bottom: 1rem;">Enter Patient Details</h3>
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_name">Patient Name *</label>
+            <input type="text" id="patientName" class="form-control" placeholder="e.g. Rahul Sharma" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="lbl_age">Age * (0–120)</label>
+              <input type="number" id="patientAge" class="form-control" placeholder="28" min="0" max="120" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="lbl_gender">Gender *</label>
+              <select id="patientGender" class="form-control">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_phone">Phone Number * (10 digits)</label>
+            <input type="tel" id="patientPhone" class="form-control" placeholder="9876543210" maxlength="10" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_complaint">Main Complaint *</label>
+            <select id="patientComplaint" class="form-control">
+              <option value="Fever">Fever</option>
+              <option value="Cough/Cold">Cough / Cold</option>
+              <option value="Headache">Headache</option>
+              <option value="Blood Pressure">Blood Pressure</option>
+              <option value="Diabetes">Diabetes</option>
+              <option value="Joint Pain">Joint Pain</option>
+              <option value="Back pain">Back pain</option>
+              <option value="Stomach">Stomach pain</option>
+              <option value="Skin">Skin rash / problem</option>
+              <option value="General Check-up">General Check-up</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" data-i18n="lbl_allergies">Known Allergies (Optional)</label>
+            <input type="text" id="patientAllergies" class="form-control" placeholder="e.g. Penicillin, Sulfa drugs" maxlength="100">
+          </div>
+
+          <div class="form-group" style="margin-top: 1.25rem;">
+            <label style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.9rem; cursor: pointer;">
+              <input type="checkbox" id="consentCheckbox" style="margin-top: 3px;" required>
+              <span data-i18n="lbl_consent">I consent to store my basic details for this appointment. Data is secured under hospital patient safety policies.</span>
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-secondary" onclick="goToStep(1)">Back</button>
+            <button type="button" class="btn btn-primary" style="flex: 1;" id="submitBookingBtn" onclick="submitBooking()" data-i18n="btn_book_now">Confirm & Book Appointment</button>
+          </div>
+        </div>
+
+        <!-- Step 5: Confirmation Result Card -->
+        <div id="stepPanel3" style="display: none;">
+          <div class="token-result-card">
+            <div class="token-success-icon">✓</div>
+            <h3 style="color: var(--success); margin-bottom: 0.5rem;">Appointment Confirmed!</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Please present this Appointment ID or cancellation code upon arrival.</p>
+
+            <div class="big-token-number" id="confirmedAptId">APT-7K3Q9</div>
+
+            <div style="max-width: 420px; margin: 1.5rem auto 0; text-align: left;">
+              <div class="token-detail-row">
+                <span style="color: var(--text-muted);">Department</span>
+                <strong id="confDept">OPD Consultation</strong>
+              </div>
+              <div class="token-detail-row">
+                <span style="color: var(--text-muted);">Doctor</span>
+                <strong id="confDoctor">Dr. A. Mehta</strong>
+              </div>
+              <div class="token-detail-row">
+                <span style="color: var(--text-muted);">Date</span>
+                <strong id="confDate">Tomorrow</strong>
+              </div>
+              <div class="token-detail-row">
+                <span style="color: var(--text-muted);">Time Slot</span>
+                <strong id="confTime">10:00 AM</strong>
+              </div>
+              <div class="token-detail-row">
+                <span style="color: var(--text-muted);">Patient</span>
+                <strong id="confPatient">Rahul Sharma</strong>
+              </div>
+              <div class="token-detail-row" style="background: #fff3cd; padding: 0.75rem; border-radius: 6px; border: 1px solid #ffeeba;">
+                <span style="color: #856404; font-weight: 600;">Cancellation Code</span>
+                <strong style="color: #856404; font-size: 1.1rem; letter-spacing: 2px;" id="confCancelCode">4821</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+              <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Slip</button>
+              <a href="/track.html" class="btn btn-primary" id="trackAptBtn">Check Queue Status</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Live Appointment Summary Card (Matches Image Screen 2) -->
+      <div class="card" id="summaryCard">
+        <h3 class="card-title">Appointment Summary</h3>
+
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);">Department</span>
+          <strong id="sumDept">OPD</strong>
+        </div>
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);">Doctor</span>
+          <strong id="sumDoctor">Dr. Sharma</strong>
+        </div>
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);">Date</span>
+          <strong id="sumDate">2026-05-17</strong>
+        </div>
+        <div class="token-detail-row">
+          <span style="color: var(--text-muted);">Time</span>
+          <strong id="sumTime">10:00 AM</strong>
+        </div>
+
+        <div style="margin-top: 2rem;" id="summaryActionContainer">
+          <button class="btn btn-primary btn-block" id="nextToDetailsBtn" onclick="goToStep(4)" data-i18n="btn_next_details">
+            Next: Patient Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/book.js"></script>
+</body>
+</html>

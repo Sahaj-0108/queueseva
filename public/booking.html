@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Booking Details — QueueCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span data-i18n="brand_name">QueueCare</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/" data-i18n="nav_home">Home</a></li>
+      <li><a href="/book.html" data-i18n="nav_appointments">Appointments</a></li>
+      <li><a href="/token.html" data-i18n="nav_token">Token</a></li>
+      <li><a href="/track.html" data-i18n="nav_status">Queue Status</a></li>
+      <li><a href="/display.html" data-i18n="nav_display">Public Display</a></li>
+    </ul>
+    <div class="nav-actions">
+      <select id="langSelect" class="lang-select">
+        <option value="en">English (EN)</option>
+        <option value="gu">ગુજરાતી (GU)</option>
+        <option value="hi">हिंदी (HI)</option>
+      </select>
+      <div id="navAuthContainer">
+        <a href="/login.html" class="btn btn-primary btn-sm" data-i18n="nav_login">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 650px;">
+    <h2 style="color: var(--primary-dark); margin-bottom: 1.5rem;">Manage Your Appointment</h2>
+
+    <!-- Search Form -->
+    <div class="card">
+      <form onsubmit="handleFindBooking(event)">
+        <div class="form-group">
+          <label class="form-label">Appointment ID</label>
+          <input type="text" id="findAptId" class="form-control" placeholder="e.g. APT-7K3Q9" required style="text-transform: uppercase;">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cancellation / Access Code</label>
+          <input type="password" id="findAptCode" class="form-control" placeholder="4-Digit Code (e.g. 1234)" required maxlength="4">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="findBtn">Find Appointment</button>
+      </form>
+    </div>
+
+    <!-- Booking Details Card -->
+    <div class="card" id="bookingDetailCard" style="display: none; border-top: 4px solid var(--primary);">
+      <h3 class="card-title">Appointment Information</h3>
+
+      <div class="token-detail-row">
+        <span style="color: var(--text-muted);">Appointment ID</span>
+        <strong id="dtlId">APT-7K3Q9</strong>
+      </div>
+      <div class="token-detail-row">
+        <span style="color: var(--text-muted);">Status</span>
+        <span class="badge badge-waiting" id="dtlStatus">BOOKED</span>
+      </div>
+      <div class="token-detail-row">
+        <span style="color: var(--text-muted);">Doctor</span>
+        <strong id="dtlDoctor">Dr. A. Mehta</strong>
+      </div>
+      <div class="token-detail-row">
+        <span style="color: var(--text-muted);">Room</span>
+        <strong id="dtlRoom">Room 3</strong>
+      </div>
+      <div class="token-detail-row">
+        <span style="color: var(--text-muted);">Date & Time</span>
+        <strong id="dtlTime">Tomorrow at 10:00 AM</strong>
+      </div>
+      <div class="token-detail-row">
+        <span style="color: var(--text-muted);">Patient Name</span>
+        <strong id="dtlPatient">Rahul Sharma</strong>
+      </div>
+
+      <div style="display: flex; gap: 1rem; margin-top: 1.75rem;">
+        <button class="btn btn-secondary" onclick="window.print()">🖨️ Print Slip</button>
+        <button class="btn btn-danger" id="cancelAptBtn" onclick="handleCancelAppointment()">Cancel Appointment</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/i18n.js"></script>
+  <script src="/js/api.js"></script>
+  <script>
+    let activeAptId = '';
+    let activeCode = '';
+
+    async function handleFindBooking(e) {
+      e.preventDefault();
+      activeAptId = document.getElementById('findAptId').value.trim().toUpperCase();
+      activeCode = document.getElementById('findAptCode').value.trim();
+
+      try {
+        const res = await apiRequest(`/api/appointments/${activeAptId}?code=${activeCode}`);
+        const apt = res.appointment;
+
+        document.getElementById('bookingDetailCard').style.display = 'block';
+        document.getElementById('dtlId').textContent = apt.id;
+        document.getElementById('dtlDoctor').textContent = apt.doctor_name;
+        document.getElementById('dtlRoom').textContent = apt.doctor_room || 'Room 3';
+        document.getElementById('dtlTime').textContent = new Date(apt.slot_start).toLocaleString('en-US');
+        document.getElementById('dtlPatient').textContent = `${apt.patient_name} (${apt.patient_age}y)`;
+
+        const badge = document.getElementById('dtlStatus');
+        badge.textContent = apt.status;
+        badge.className = 'badge ' + (apt.status === 'BOOKED' ? 'badge-waiting' : apt.status === 'COMPLETED' ? 'badge-served' : 'badge-service');
+
+        const cancelBtn = document.getElementById('cancelAptBtn');
+        cancelBtn.style.display = apt.status === 'BOOKED' ? 'inline-flex' : 'none';
+
+      } catch (err) {
+        showToast(err.message || 'Could not find appointment', 'error');
+      }
+    }
+
+    async function handleCancelAppointment() {
+      if (!confirm('Are you sure you want to cancel this appointment? This cannot be undone.')) return;
+
+      try {
+        const res = await apiRequest(`/api/appointments/${activeAptId}/cancel`, {
+          method: 'POST',
+          body: JSON.stringify({ code: activeCode })
+        });
+        showToast(res.message, 'success');
+        document.getElementById('dtlStatus').textContent = 'CANCELLED';
+        document.getElementById('dtlStatus').className = 'badge badge-skipped';
+        document.getElementById('cancelAptBtn').style.display = 'none';
+      } catch (err) {
+        showToast(err.message || 'Failed to cancel appointment', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

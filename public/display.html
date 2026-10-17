@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Department Queue Display — QueueCare</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="display-body">
+
+  <!-- Top Display Header -->
+  <header class="display-header">
+    <div class="display-title">
+      <div class="brand-icon" style="background: #38bdf8; color: #0b1329;">✚</div>
+      <span>QueueCare Department Queue Display</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1.5rem;">
+      <a href="/" style="color: #94a3b8; text-decoration: none; font-size: 0.95rem; font-weight: 600;">← Back to Home</a>
+      <div class="display-clock" id="liveDisplayClock">Oct 17, 2026 | 10:24 AM</div>
+    </div>
+  </header>
+
+  <!-- Department Display Cards Grid -->
+  <main class="display-grid" id="deptDisplayGrid">
+    <!-- OPD Consultation Card -->
+    <div class="display-card opd">
+      <div class="dept-header" style="color: #38bdf8;">
+        <span style="font-size: 1.8rem;">🩺</span>
+        <span>OPD Consultation</span>
+      </div>
+
+      <div class="serving-box">
+        <div class="serving-label">Currently Serving</div>
+        <div class="serving-token" id="opdServing">OPD-018</div>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; text-transform: uppercase;">Next Tokens</div>
+        <div class="next-tokens-list" id="opdNext">
+          <span class="next-token-chip">OPD-019</span>
+          <span class="next-token-chip">OPD-020</span>
+          <span class="next-token-chip">OPD-021</span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; border-top: 1px solid #334155; padding-top: 1rem; font-size: 0.95rem;">
+        <span style="color: #94a3b8;">Waiting Time (Approx)</span>
+        <strong id="opdWait" style="color: #f8fafc;">30 mins</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding-top: 0.5rem; font-size: 0.95rem;">
+        <span style="color: #94a3b8;">Queue Status</span>
+        <span class="badge badge-service" id="opdStatus">Normal</span>
+      </div>
+    </div>
+
+    <!-- Laboratory Card -->
+    <div class="display-card lab">
+      <div class="dept-header" style="color: #c084fc;">
+        <span style="font-size: 1.8rem;">🔬</span>
+        <span>Laboratory</span>
+      </div>
+
+      <div class="serving-box">
+        <div class="serving-label">Currently Serving</div>
+        <div class="serving-token" id="labServing">LAB-005</div>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; text-transform: uppercase;">Next Tokens</div>
+        <div class="next-tokens-list" id="labNext">
+          <span class="next-token-chip">LAB-006</span>
+          <span class="next-token-chip">LAB-007</span>
+          <span class="next-token-chip">LAB-008</span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; border-top: 1px solid #334155; padding-top: 1rem; font-size: 0.95rem;">
+        <span style="color: #94a3b8;">Waiting Time (Approx)</span>
+        <strong id="labWait" style="color: #f8fafc;">25 mins</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding-top: 0.5rem; font-size: 0.95rem;">
+        <span style="color: #94a3b8;">Queue Status</span>
+        <span class="badge badge-service" id="labStatus">Normal</span>
+      </div>
+    </div>
+
+    <!-- Pharmacy Card -->
+    <div class="display-card phr">
+      <div class="dept-header" style="color: #4ade80;">
+        <span style="font-size: 1.8rem;">💊</span>
+        <span>Pharmacy</span>
+      </div>
+
+      <div class="serving-box">
+        <div class="serving-label">Currently Serving</div>
+        <div class="serving-token" id="phrServing">PH-010</div>
+      </div>
+
+      <div style="margin-bottom: 1.25rem;">
+        <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; text-transform: uppercase;">Next Tokens</div>
+        <div class="next-tokens-list" id="phrNext">
+          <span class="next-token-chip">PH-011</span>
+          <span class="next-token-chip">PH-012</span>
+          <span class="next-token-chip">PH-013</span>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; border-top: 1px solid #334155; padding-top: 1rem; font-size: 0.95rem;">
+        <span style="color: #94a3b8;">Waiting Time (Approx)</span>
+        <strong id="phrWait" style="color: #f8fafc;">20 mins</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding-top: 0.5rem; font-size: 0.95rem;">
+        <span style="color: #94a3b8;">Queue Status</span>
+        <span class="badge badge-service" id="phrStatus">Normal</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Emergency / Data Safety Banner Footer -->
+  <footer class="display-footer">
+    <p>This is a public display. No personal information is shown.</p>
+    <p style="margin-top: 0.35rem; color: #f59e0b; font-weight: 500;">
+      Emergency? Do not wait in queue. Proceed directly to Emergency or ask any staff member.
+    </p>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/display.js"></script>
+</body>
+</html>

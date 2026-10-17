@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unauthorized Access — QueueCare Security</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="brand">
+      <div class="brand-icon">✚</div>
+      <span>QueueCare Security</span>
+    </a>
+    <div style="display: flex; gap: 0.75rem;">
+      <a href="/" class="btn btn-secondary btn-sm">Home</a>
+      <a href="/login.html" class="btn btn-primary btn-sm">Login</a>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 800px;">
+    <!-- Screen 9: Access Denied Card (Exact match with reference image) -->
+    <div class="security-alert-box">
+      <div class="security-icon">🔒</div>
+      <h2 style="color: #c53030; font-size: 1.8rem; margin-bottom: 0.5rem;">Access Denied</h2>
+      <p style="font-weight: 600; color: #4a5568; margin-bottom: 0.5rem;">
+        You do not have permission to perform this action.
+      </p>
+      <p style="color: #718096; font-size: 0.95rem;">
+        This action is restricted to authorised staff only.
+      </p>
+
+      <!-- Error Details (for demonstration) Box -->
+      <div class="error-details-box">
+        <div style="font-weight: 700; color: #c53030; margin-bottom: 0.5rem;">Error Details (for demonstration)</div>
+        <div style="margin-bottom: 0.35rem;">
+          <strong style="color: #4a5568;">Status Code:</strong> <span id="demoStatusCode" style="color: #e53e3e; font-weight: bold;">403 Forbidden</span>
+        </div>
+        <div>
+          <strong style="color: #4a5568;">Message:</strong> <span id="demoErrorMessage" style="color: #e53e3e;">You are not authorized to call the next token.</span>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+        <button class="btn btn-primary" onclick="history.back()">Go Back</button>
+        <a href="/" class="btn btn-secondary">Return to Home</a>
+      </div>
+    </div>
+
+    <!-- Live Cybersecurity Demonstration Tester (Restricted to Hospital Administrator) -->
+    <div class="card" id="adminSecurityConsoleCard" style="display: none; margin-top: 2rem;">
+      <h3 class="card-title" style="color: var(--primary-dark);">
+        🛡️ Live Cybersecurity Verification Console (Admin Access)
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        Test and verify the server-side cybersecurity defenses enforced by QueueCare (RBAC, input validation, state transitions, and rate limiting).
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
+        <button class="btn btn-outline btn-sm" onclick="triggerSecurityTest('401')">
+          1. Test 401 Unauthorized
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="triggerSecurityTest('403')">
+          2. Test 403 Forbidden
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="triggerSecurityTest('409')">
+          3. Test 409 State Conflict
+        </button>
+        <button class="btn btn-outline btn-sm" onclick="triggerSecurityTest('422')">
+          4. Test 422 Invalid Input (-5 age)
+        </button>
+      </div>
+
+      <!-- Live Test Output Terminal -->
+      <div style="background: #0f172a; color: #38bdf8; padding: 1.25rem; border-radius: var(--radius-md); font-family: monospace; font-size: 0.9rem; min-height: 120px; overflow-x: auto;">
+        <div style="color: #94a3b8; margin-bottom: 0.5rem;">// Server Security Response Log:</div>
+        <pre id="securityConsoleLog" style="margin: 0; white-space: pre-wrap; word-break: break-all;">Click any button above to test the server's security defenses...</pre>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/unauthorized.js"></script>
+</body>
+</html>
