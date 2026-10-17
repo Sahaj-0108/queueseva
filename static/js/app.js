@@ -56,24 +56,127 @@ const App = {
         setTimeout(() => toast.remove(), 4000);
     },
 
-    // ----------------- Authentication -----------------
+    // ----------------- Authentication & Login Portal -----------------
     checkAuth: async function () {
+        if (!this.authToken) {
+            this.showLoginScreen();
+            return;
+        }
         try {
             const res = await fetch("/api/auth/me", {
-                headers: this.authToken ? { "Authorization": `Bearer ${this.authToken}` } : {}
+                headers: { "Authorization": `Bearer ${this.authToken}` }
             });
             const data = await res.json();
-            if (data.user) {
+            if (data && data.user) {
                 this.currentUser = data.user;
                 this.currentRole = data.user.role;
                 this.updateAuthUI();
+                this.hideLoginScreen();
                 this.switchRole(data.user.role);
             } else {
-                // Default to patient guest session
-                this.switchRole("patient");
+                this.showLoginScreen();
             }
         } catch (e) {
-            console.error("Auth check failed:", e);
+            this.showLoginScreen();
+        }
+    },
+
+    showLoginScreen: function () {
+        this.currentUser = null;
+        this.authToken = null;
+        localStorage.removeItem("queuseva_token");
+        
+        // Hide all dashboard views
+        document.querySelectorAll(".dashboard-view").forEach(v => v.style.display = "none");
+        
+        // Show login view
+        const loginView = document.getElementById("view_login");
+        if (loginView) loginView.style.display = "block";
+
+        const ribbon = document.querySelector(".role-ribbon");
+        if (ribbon) ribbon.style.display = "none";
+
+        const ticker = document.querySelector(".token-ticker-card");
+        if (ticker) ticker.style.display = "none";
+
+        const geofence = document.getElementById("geofenceStatusBox");
+        if (geofence) geofence.style.display = "none";
+
+        this.updateAuthUI();
+    },
+
+    hideLoginScreen: function () {
+        const loginView = document.getElementById("view_login");
+        if (loginView) loginView.style.display = "none";
+
+        const ribbon = document.querySelector(".role-ribbon");
+        if (ribbon) ribbon.style.display = "flex";
+
+        const ticker = document.querySelector(".token-ticker-card");
+        if (ticker) ticker.style.display = "flex";
+
+        const geofence = document.getElementById("geofenceStatusBox");
+        if (geofence) geofence.style.display = "block";
+    },
+
+    selectLoginRole: function (role, el) {
+        document.querySelectorAll(".login-role-chip").forEach(c => c.classList.remove("selected"));
+        if (el) el.classList.add("selected");
+        const emailMap = {
+            patient: "patient@queueseva.gov.in",
+            doctor: "doctor@queueseva.gov.in",
+            staff: "staff@queueseva.gov.in",
+            lab: "lab@queueseva.gov.in",
+            pharmacy: "pharmacy@queueseva.gov.in",
+            bloodbank: "bloodbank@queueseva.gov.in",
+            admin: "admin@queueseva.gov.in"
+        };
+        const passMap = {
+            patient: "patient123",
+            doctor: "doctor123",
+            staff: "staff123",
+            lab: "lab123",
+            pharmacy: "pharmacy123",
+            bloodbank: "blood123",
+            admin: "admin123"
+        };
+        const emailInput = document.getElementById("loginEmailInput");
+        const passInput = document.getElementById("loginPasswordInput");
+        if (emailInput && emailMap[role]) emailInput.value = emailMap[role];
+        if (passInput && passMap[role]) passInput.value = passMap[role];
+    },
+
+    loginFormSubmit: async function (e) {
+        if (e) e.preventDefault();
+        const email = (document.getElementById("loginEmailInput") ? document.getElementById("loginEmailInput").value : "").trim();
+        const pass = document.getElementById("loginPasswordInput") ? document.getElementById("loginPasswordInput").value : "";
+
+        if (!email || !pass) {
+            this.toast("Please enter email address and password", "error");
+            return;
+        }
+
+        try {
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password: pass })
+            });
+            const data = await res.json();
+            if (data.token) {
+                this.authToken = data.token;
+                localStorage.setItem("queuseva_token", data.token);
+                this.currentUser = data.user;
+                this.currentRole = data.user.role;
+                this.updateAuthUI();
+                this.hideLoginScreen();
+                this.switchRole(data.user.role);
+                this.toast(`Welcome back, ${data.user.name}!`, "success");
+            } else {
+                this.toast(data.error || "Login credentials failed", "error");
+            }
+        } catch (err) {
+            this.toast("Login error", "error");
         }
     },
 
@@ -104,6 +207,7 @@ const App = {
                 this.currentUser = data.user;
                 this.currentRole = data.user.role;
                 this.updateAuthUI();
+                this.hideLoginScreen();
                 this.switchRole(this.currentRole);
                 this.toast(`Authenticated as ${data.user.name} (${data.user.role.toUpperCase()})`, "success");
             } else {
@@ -124,8 +228,7 @@ const App = {
         this.authToken = null;
         this.currentUser = null;
         localStorage.removeItem("queuseva_token");
-        this.updateAuthUI();
-        this.switchRole("patient");
+        this.showLoginScreen();
         this.toast("Logged out successfully");
     },
 
@@ -134,14 +237,16 @@ const App = {
         if (userDisplay) {
             if (this.currentUser) {
                 userDisplay.innerHTML = `
-                    <div style="font-size: 0.85rem; text-align: right;">
-                        <strong>${this.currentUser.name}</strong> 
-                        <span class="badge badge-info">${this.currentUser.role.toUpperCase()}</span>
-                        <button class="btn btn-sm btn-secondary" onclick="App.logout()" style="margin-left: 8px;">Logout</button>
+                    <div style="font-size: 0.85rem; text-align: right; display: flex; align-items: center; gap: 8px;">
+                        <div>
+                            <strong>${this.currentUser.name}</strong> 
+                            <span class="badge badge-info">${this.currentUser.role.toUpperCase()}</span>
+                        </div>
+                        <button class="btn btn-sm btn-danger" onclick="App.logout()">Sign Out</button>
                     </div>
                 `;
             } else {
-                userDisplay.innerHTML = `<span style="font-size: 0.85rem; color: #64748b;">Guest Mode</span>`;
+                userDisplay.innerHTML = `<button class="btn btn-sm btn-primary" onclick="App.showLoginScreen()">Login Portal</button>`;
             }
         }
     },
@@ -458,16 +563,20 @@ const App = {
             if (currentBox) {
                 if (data.currentPatient) {
                     currentBox.innerHTML = `
-                        <div style="background: #f0fdf4; border: 2px solid #16a34a; border-radius: 8px; padding: 16px;">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="background: #fff5f5; border: 2px solid #ef4444; border-radius: 8px; padding: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
                                 <div>
-                                    <span class="badge badge-success">NOW CONSULTING</span>
-                                    <h3 style="color: #166534; font-size: 1.5rem; margin-top: 4px;">Token: ${data.currentPatient.tokenNumber}</h3>
-                                    <div style="font-size: 0.95rem; font-weight: 600;">${data.currentPatient.patientName} (${data.currentPatient.patientPhone})</div>
+                                    <span class="status-pill-busy">🔴 BUSY (Consulting Patient)</span>
+                                    <h3 style="color: #991b1b; font-size: 1.5rem; margin-top: 6px;">Token: ${data.currentPatient.tokenNumber}</h3>
+                                    <div style="font-size: 0.95rem; font-weight: 600;">${data.currentPatient.patientName} (${data.currentPatient.patientPhone || 'Registered Citizen'})</div>
+                                    <div style="font-size: 0.85rem; color: #475569; margin-top: 2px;">Assigned Room: <strong>${data.currentPatient.serviceCounter || 'OPD Room 3'}</strong></div>
                                 </div>
                                 <div style="text-align: right;">
                                     <div style="background: #fee2e2; border: 1px solid #ef4444; color: #991b1b; padding: 6px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: bold;">
-                                        ⚠️ Allergy Warning: Penicillin, Sulfa
+                                        ⚠️ Recorded Allergies: Penicillin, Sulfa
+                                    </div>
+                                    <div style="margin-top: 8px; font-size: 0.82rem; color: #64748b;">
+                                        Staff is notified that you are currently busy with this patient.
                                     </div>
                                 </div>
                             </div>
@@ -476,7 +585,20 @@ const App = {
                     document.getElementById("doctorConsultationForm").style.display = "block";
                     document.getElementById("activeDoctorTokenInput").value = data.currentPatient.tokenNumber;
                 } else {
-                    currentBox.innerHTML = `<p style="color: #64748b;">No patient currently in consultation room. Click 'Call Next Patient' below.</p>`;
+                    currentBox.innerHTML = `
+                        <div style="background: #f0fdf4; border: 2px solid #86efac; border-radius: 8px; padding: 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                            <div>
+                                <span class="status-pill-free">🟢 FREE — Ready for Next Patient</span>
+                                <h3 style="color: #166534; font-size: 1.25rem; margin-top: 6px;">Consultation Room is Currently Available</h3>
+                                <p style="color: #15803d; font-size: 0.88rem; margin-top: 2px;">
+                                    Front-desk staff can dispatch the next waiting token to your room, or you can call the next patient directly.
+                                </p>
+                            </div>
+                            <button class="btn btn-primary" onclick="App.doctorCallNext()">
+                                <span>Call Next Patient Directly</span> ➔
+                            </button>
+                        </div>
+                    `;
                     document.getElementById("doctorConsultationForm").style.display = "none";
                 }
             }
@@ -488,11 +610,14 @@ const App = {
                         <td><strong>${idx + 1}</strong></td>
                         <td><span class="badge ${t.priority === 'urgent' ? 'badge-danger' : 'badge-info'}">${t.tokenNumber}</span></td>
                         <td>${t.patientName}</td>
-                        <td>${t.status.toUpperCase()}</td>
-                        <td>${t.priority === 'urgent' ? '<strong style="color:red;">URGENT</strong>' : 'Normal'}</td>
+                        <td>${t.status === 'in_consultation' ? '<span class="badge badge-warning">IN ROOM</span>' : '<span class="badge badge-info">WAITING</span>'}</td>
+                        <td>${t.priority === 'urgent' ? '<strong style="color:red;">URGENT PRIORITY</strong>' : 'Normal'}</td>
                     </tr>
                 `).join("");
             }
+
+            // Load consulted history
+            this.loadConsultedToday();
         } catch (e) {
             console.error("Doctor dash error:", e);
         }
@@ -506,7 +631,7 @@ const App = {
             });
             const data = await res.json();
             if (data.token) {
-                this.toast(`Called ${data.token.tokenNumber}`, "success");
+                this.toast(`Called Token ${data.token.tokenNumber}`, "success");
                 VoiceAnnouncer.speak(data.announcementText, currentLanguage);
                 this.loadDoctorDashboard();
                 this.fetchLiveQueues();
@@ -552,8 +677,8 @@ const App = {
                 })
             });
             const data = await res.json();
-            if (data.prescription) {
-                this.toast("Consultation recorded, prescription & orders dispatched!", "success");
+            if (data.prescription || data.message) {
+                this.toast("Consultation finalized! Patient removed from room. Doctor is now FREE for the next patient.", "success");
                 this.loadDoctorDashboard();
                 this.fetchLiveQueues();
             } else {
@@ -564,12 +689,134 @@ const App = {
         }
     },
 
-    // ----------------- Staff Dashboard -----------------
+    // ----------------- Staff Dashboard & Doctor Room Coordination -----------------
     loadStaffDashboard: async function () {
         if (!this.currentUser || this.currentUser.role !== "staff") {
             await this.quickLoginAs("staff");
         }
         this.fetchLiveQueues();
+        this.loadDoctorRoomsStatus();
+        this.loadConsultedToday();
+    },
+
+    loadDoctorRoomsStatus: async function () {
+        try {
+            const res = await fetch("/api/doctors/status");
+            const doctors = await res.json();
+
+            const container = document.getElementById("staffDoctorRoomsGrid");
+            if (container) {
+                container.innerHTML = doctors.map(doc => {
+                    const isFree = doc.consultationStatus === "free";
+                    return `
+                        <div class="doctor-room-card ${isFree ? 'is-free' : 'is-busy'}">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                <div>
+                                    <span class="${isFree ? 'status-pill-free' : 'status-pill-busy'}">
+                                        ${isFree ? '🟢 FREE (Ready)' : '🔴 BUSY (Consulting)'}
+                                    </span>
+                                    <h4 style="margin-top: 8px; color: #0f172a; font-size: 1.1rem;">${doc.name}</h4>
+                                    <div style="font-size: 0.85rem; color: #0284c7; font-weight: 600;">${doc.roomNumber || 'OPD Room'} • ${doc.departmentName || 'General OPD'}</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 12px; font-size: 0.88rem; min-height: 44px;">
+                                ${isFree ? `
+                                    <div style="color: #16a34a; font-weight: 600;">
+                                        ✓ Doctor is currently free. Ready to receive next token.
+                                    </div>
+                                ` : `
+                                    <div style="color: #dc2626;">
+                                        <strong>Currently Consulting:</strong> ${doc.currentPatient ? doc.currentPatient.tokenNumber : 'Patient'} (${doc.currentPatient ? doc.currentPatient.patientName : ''})
+                                    </div>
+                                `}
+                            </div>
+                            <div style="margin-top: 12px;">
+                                ${isFree ? `
+                                    <button class="btn btn-sm btn-success" style="width: 100%;" onclick="App.staffProcessToDoctor('${doc._id}')">
+                                        👉 Send Next Waiting Patient to Room
+                                    </button>
+                                ` : `
+                                    <button class="btn btn-sm btn-secondary" style="width: 100%;" disabled>
+                                        Waiting for Doctor to Finish
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            }
+        } catch (e) {
+            console.error("Doctor rooms status error:", e);
+        }
+    },
+
+    staffProcessToDoctor: async function (doctorId) {
+        try {
+            const res = await fetch("/api/staff/process-to-doctor", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${this.authToken}`
+                },
+                body: JSON.stringify({
+                    doctorId,
+                    language: currentLanguage
+                })
+            });
+            const data = await res.json();
+            if (data.token) {
+                this.toast(data.message, "success");
+                VoiceAnnouncer.speak(data.announcementText, currentLanguage);
+                this.loadDoctorRoomsStatus();
+                this.fetchLiveQueues();
+            } else {
+                this.toast(data.error || "Could not process token", "error");
+            }
+        } catch (e) {
+            this.toast("Dispatch error", "error");
+        }
+    },
+
+    loadConsultedToday: async function () {
+        try {
+            const res = await fetch("/api/doctor/consulted-today");
+            const consulted = await res.json();
+
+            const staffTable = document.getElementById("staffConsultedTableBody");
+            if (staffTable) {
+                if (consulted.length === 0) {
+                    staffTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#64748b;">No patients consulted yet today.</td></tr>`;
+                } else {
+                    staffTable.innerHTML = consulted.map(c => `
+                        <tr>
+                            <td><span class="badge badge-success">${c.tokenNumber}</span></td>
+                            <td>${c.patientName}</td>
+                            <td>${c.doctorName}</td>
+                            <td>${c.roomNumber}</td>
+                            <td><small>${c.completedAt}</small></td>
+                        </tr>
+                    `).join("");
+                }
+            }
+
+            const docTable = document.getElementById("doctorConsultedTableBody");
+            if (docTable) {
+                if (consulted.length === 0) {
+                    docTable.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#64748b;">No consultations completed yet today.</td></tr>`;
+                } else {
+                    docTable.innerHTML = consulted.map(c => `
+                        <tr>
+                            <td><span class="badge badge-success">${c.tokenNumber}</span></td>
+                            <td>${c.patientName}</td>
+                            <td>${c.roomNumber}</td>
+                            <td><small>${c.completedAt}</small></td>
+                        </tr>
+                    `).join("");
+                }
+            }
+        } catch (e) {
+            console.error("Consulted history error:", e);
+        }
     },
 
     staffCreateWalkin: async function () {

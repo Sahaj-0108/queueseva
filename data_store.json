@@ -13,9 +13,8 @@
         "Penicillin",
         "Sulfa drugs"
       ],
-      "passwordHash": "$2b$10$9dBJF84IPpGfgJ3aXPr9yOLpzfBBy.Cr9OMZYssOgs12UCdM7SmAa",
-      "sessionToken": null,
-      "lastLogin": "2026-10-17T07:33:41.772585"
+      "passwordHash": "$2b$10$44Czocb5fKrCFBgN3g1.9Okrh8pQc7OyD3MtWnjI0STxVbL8fDSWW",
+      "sessionToken": null
     },
     {
       "email": "doctor@queueseva.gov.in",
@@ -25,9 +24,8 @@
       "role": "doctor",
       "departmentId": "dept_gen_med",
       "roomNumber": "OPD Room 3",
-      "passwordHash": "$2b$10$tmsUae.U3e69HdVD8QXVNexnRK8Tsa0wQXQvgAR0g0nvGUy2vk/pC",
-      "sessionToken": null,
-      "lastLogin": "2026-10-17T07:33:41.953606"
+      "passwordHash": "$2b$10$Vl8UgAvUzUFOJASRCc/Cb.bHTb5Qz/9MikfrgahtMrWd5pz95V3LW",
+      "sessionToken": null
     },
     {
       "email": "staff@queueseva.gov.in",
@@ -36,8 +34,9 @@
       "phone": "+91 98250 33445",
       "role": "staff",
       "counter": "Counter 2 (Check-in & Registration)",
-      "passwordHash": "$2b$10$ufRMfP4Vt9zarwCjdWs.5uVw4cv9foROPqTMJpAcsFuDAIy/yO7CO",
-      "sessionToken": null
+      "passwordHash": "$2b$10$gnYvIi2xw/myDtZm0zsfEOky5J1BgELn54VV6wxmOU/sTeK9WoP8C",
+      "sessionToken": "ab5a978ca59bb59df1d39990d03a7d4c50d46b2f277d70ad",
+      "lastLogin": "2026-10-17T08:21:17.109347"
     },
     {
       "email": "lab@queueseva.gov.in",
@@ -46,7 +45,7 @@
       "phone": "+91 98250 55667",
       "role": "lab",
       "section": "Central Diagnostics & Pathology",
-      "passwordHash": "$2b$10$yuTKNl34qL/YCfEC.A7u8eikF9YyCuk13Ht7pFiYAwH4a4poIRXRq",
+      "passwordHash": "$2b$10$0XikhKcSK6OYYqU/iXG3ueIudol8qPCEktPkU/pqkfb8EKLPBuj52",
       "sessionToken": null
     },
     {
@@ -56,7 +55,7 @@
       "phone": "+91 98250 77889",
       "role": "pharmacy",
       "dispensary": "Main Jan Aushadhi Dispensary",
-      "passwordHash": "$2b$10$cnNqzjjQmDVas5ZQnNc/v.6Ky2ZxzQx9FCAaRf/A6Jmy8iYEMhHl6",
+      "passwordHash": "$2b$10$vzs4KNCnl50GxjImalGHF.Lc0d5WOM3b/ZAwrcIxJVkCQowGDYnUK",
       "sessionToken": null
     },
     {
@@ -65,7 +64,7 @@
       "name": "Dr. Neha Shah (Blood Transfusion Officer)",
       "phone": "+91 98250 99001",
       "role": "bloodbank",
-      "passwordHash": "$2b$10$ZLK87E7uKg3y6iTv6M1b6OnT2isGKa3SYYHF1kdu.3SBQdfU2m7Ae",
+      "passwordHash": "$2b$10$caZlLOlUz946.Qk.4m6ev.I2q60F8dePQ1xOY7bN.GIykfrfnLh.a",
       "sessionToken": null
     },
     {
@@ -74,13 +73,13 @@
       "name": "H. M. Trivedi (Medical Superintendent)",
       "phone": "+91 98250 00001",
       "role": "admin",
-      "passwordHash": "$2b$10$ckLeSy8GLBnLzR63IfSdRu4gWGYrDl6UvErpCiP9I2WDdhOPihUcO",
+      "passwordHash": "$2b$10$mzKjrWNoEeNwvtorFKkhPu18oGCnSNMDfURaG4pfpKCPd.ttng/pq",
       "sessionToken": null
     }
   ],
   "departments": [
     {
-      "_id": "bd889782-cd5a-4819-bbfa-42d7964f2170",
+      "_id": "dept_gen_med",
       "name": "General Medicine",
       "code": "MED",
       "floor": "Ground Floor",
@@ -88,7 +87,7 @@
       "fee": 50
     },
     {
-      "_id": "f1a0511f-3504-49ef-8bfc-978e14edacc4",
+      "_id": "dept_cardio",
       "name": "Cardiology",
       "code": "CARD",
       "floor": "1st Floor",
@@ -96,7 +95,7 @@
       "fee": 100
     },
     {
-      "_id": "ea52640a-fd3c-4c9e-8494-84d3d0b5f65c",
+      "_id": "dept_ortho",
       "name": "Orthopedics",
       "code": "ORTH",
       "floor": "Ground Floor",
@@ -104,7 +103,7 @@
       "fee": 80
     },
     {
-      "_id": "ca5e3ed3-e3df-4383-abf3-0d6665323aa4",
+      "_id": "dept_pedia",
       "name": "Pediatrics",
       "code": "PED",
       "floor": "2nd Floor",
@@ -112,7 +111,7 @@
       "fee": 50
     },
     {
-      "_id": "7d8af566-8dba-4198-8220-b9d2a2587a68",
+      "_id": "dept_gynec",
       "name": "Gynecology & Obstetrics",
       "code": "GYN",
       "floor": "1st Floor",
@@ -120,7 +119,7 @@
       "fee": 60
     },
     {
-      "_id": "bda6cf23-d96d-4f0d-b897-efb75915a184",
+      "_id": "dept_ent",
       "name": "ENT (Ear, Nose, Throat)",
       "code": "ENT",
       "floor": "2nd Floor",
@@ -128,175 +127,7 @@
       "fee": 50
     },
     {
-      "_id": "51d8c5f1-ed43-49be-8fad-42793e5b5abc",
-      "name": "Emergency & Trauma",
-      "code": "EMRG",
-      "floor": "Ground Floor",
-      "wing": "Red Zone",
-      "fee": 0
-    },
-    {
-      "_id": "91801c76-3d61-4dc4-a019-7625c3c3dfb9",
-      "name": "General Medicine",
-      "code": "MED",
-      "floor": "Ground Floor",
-      "wing": "Wing A",
-      "fee": 50
-    },
-    {
-      "_id": "4feedc99-ab7e-4ee4-9e86-caa915dd9076",
-      "name": "Cardiology",
-      "code": "CARD",
-      "floor": "1st Floor",
-      "wing": "Wing B",
-      "fee": 100
-    },
-    {
-      "_id": "f8bd1ff1-d24e-46d5-a7ef-cf69a718822d",
-      "name": "Orthopedics",
-      "code": "ORTH",
-      "floor": "Ground Floor",
-      "wing": "Wing C",
-      "fee": 80
-    },
-    {
-      "_id": "d8f4f6d1-d0aa-4406-89a7-915cdb3d0100",
-      "name": "Pediatrics",
-      "code": "PED",
-      "floor": "2nd Floor",
-      "wing": "Wing A",
-      "fee": 50
-    },
-    {
-      "_id": "7b31f00d-01b6-460c-8e9d-8b5997eae8e7",
-      "name": "Gynecology & Obstetrics",
-      "code": "GYN",
-      "floor": "1st Floor",
-      "wing": "Wing C",
-      "fee": 60
-    },
-    {
-      "_id": "da729401-0be5-4046-908f-318e38ccd965",
-      "name": "ENT (Ear, Nose, Throat)",
-      "code": "ENT",
-      "floor": "2nd Floor",
-      "wing": "Wing B",
-      "fee": 50
-    },
-    {
-      "_id": "f6b4e560-b6ac-4c6b-ad07-7eca2468b2d1",
-      "name": "Emergency & Trauma",
-      "code": "EMRG",
-      "floor": "Ground Floor",
-      "wing": "Red Zone",
-      "fee": 0
-    },
-    {
-      "_id": "c404f209-126e-4d15-bc52-72f5443f5535",
-      "name": "General Medicine",
-      "code": "MED",
-      "floor": "Ground Floor",
-      "wing": "Wing A",
-      "fee": 50
-    },
-    {
-      "_id": "20fd2e72-7124-4b81-a0ae-803d5e3dece7",
-      "name": "Cardiology",
-      "code": "CARD",
-      "floor": "1st Floor",
-      "wing": "Wing B",
-      "fee": 100
-    },
-    {
-      "_id": "e68ca32e-be90-425a-8f41-5fdb4c93beb0",
-      "name": "Orthopedics",
-      "code": "ORTH",
-      "floor": "Ground Floor",
-      "wing": "Wing C",
-      "fee": 80
-    },
-    {
-      "_id": "a01215d9-4c52-4fd3-bd47-955c50cea49b",
-      "name": "Pediatrics",
-      "code": "PED",
-      "floor": "2nd Floor",
-      "wing": "Wing A",
-      "fee": 50
-    },
-    {
-      "_id": "7ae8a4b0-f8e3-4df4-b8e9-68a21aa3a33c",
-      "name": "Gynecology & Obstetrics",
-      "code": "GYN",
-      "floor": "1st Floor",
-      "wing": "Wing C",
-      "fee": 60
-    },
-    {
-      "_id": "779b0af3-d4c8-4113-96be-e9f87a375286",
-      "name": "ENT (Ear, Nose, Throat)",
-      "code": "ENT",
-      "floor": "2nd Floor",
-      "wing": "Wing B",
-      "fee": 50
-    },
-    {
-      "_id": "1b5d622c-b8de-4812-af1e-c641f031f825",
-      "name": "Emergency & Trauma",
-      "code": "EMRG",
-      "floor": "Ground Floor",
-      "wing": "Red Zone",
-      "fee": 0
-    },
-    {
-      "_id": "a555dce7-6eff-4c55-9e1d-494238c2f138",
-      "name": "General Medicine",
-      "code": "MED",
-      "floor": "Ground Floor",
-      "wing": "Wing A",
-      "fee": 50
-    },
-    {
-      "_id": "ca9f593c-1fc9-4d7b-a959-6a46162cf3ae",
-      "name": "Cardiology",
-      "code": "CARD",
-      "floor": "1st Floor",
-      "wing": "Wing B",
-      "fee": 100
-    },
-    {
-      "_id": "ed2702ea-09c8-41bd-ab1b-c488858f3e81",
-      "name": "Orthopedics",
-      "code": "ORTH",
-      "floor": "Ground Floor",
-      "wing": "Wing C",
-      "fee": 80
-    },
-    {
-      "_id": "5d3f5eac-9024-4a2a-9a75-a5013c16bb34",
-      "name": "Pediatrics",
-      "code": "PED",
-      "floor": "2nd Floor",
-      "wing": "Wing A",
-      "fee": 50
-    },
-    {
-      "_id": "5300b02f-13b0-4d10-94cb-12db4d1926c4",
-      "name": "Gynecology & Obstetrics",
-      "code": "GYN",
-      "floor": "1st Floor",
-      "wing": "Wing C",
-      "fee": 60
-    },
-    {
-      "_id": "27cd28d9-5fb6-4e00-a7d0-5b772a0db524",
-      "name": "ENT (Ear, Nose, Throat)",
-      "code": "ENT",
-      "floor": "2nd Floor",
-      "wing": "Wing B",
-      "fee": 50
-    },
-    {
-      "_id": "241a5663-d168-4b15-9fa6-45817309818f",
+      "_id": "dept_emergency",
       "name": "Emergency & Trauma",
       "code": "EMRG",
       "floor": "Ground Floor",
@@ -306,7 +137,7 @@
   ],
   "doctors": [
     {
-      "_id": "dd37da55-6962-4485-ab8d-9e9bb28eb2bb",
+      "_id": "doc_aarav",
       "userId": "usr_doctor_1",
       "name": "Dr. Aarav Mehta",
       "qualification": "MD (Internal Medicine), AIIMS",
@@ -318,7 +149,7 @@
       "status": "active"
     },
     {
-      "_id": "af0540f0-0956-4834-a800-e5f474f0480d",
+      "_id": "doc_ananya",
       "name": "Dr. Ananya Roy",
       "qualification": "DM (Cardiology), PGI",
       "departmentId": "dept_cardio",
@@ -329,7 +160,7 @@
       "status": "active"
     },
     {
-      "_id": "3b11438d-448f-4168-99f4-cfcf725d9e3c",
+      "_id": "doc_bhavik",
       "name": "Dr. Bhavik Solanki",
       "qualification": "MS (Orthopedics)",
       "departmentId": "dept_ortho",
@@ -340,142 +171,7 @@
       "status": "active"
     },
     {
-      "_id": "bbd6aaf8-ec31-4b0a-99f3-50c21f8c8017",
-      "name": "Dr. Kavita Verma",
-      "qualification": "MD (Pediatrics)",
-      "departmentId": "dept_pedia",
-      "departmentName": "Pediatrics",
-      "roomNumber": "Room 205 (2nd Floor)",
-      "workingHours": "9:00 AM \u2013 2:00 PM",
-      "avgConsultationMins": 10,
-      "status": "active"
-    },
-    {
-      "_id": "955f788a-f9a1-48f2-bb5c-8abc216eab27",
-      "userId": "usr_doctor_1",
-      "name": "Dr. Aarav Mehta",
-      "qualification": "MD (Internal Medicine), AIIMS",
-      "departmentId": "dept_gen_med",
-      "departmentName": "General Medicine",
-      "roomNumber": "OPD Room 3",
-      "workingHours": "9:00 AM \u2013 2:00 PM",
-      "avgConsultationMins": 10,
-      "status": "active"
-    },
-    {
-      "_id": "00cef340-2b96-461f-80c4-b2ef5a25b32e",
-      "name": "Dr. Ananya Roy",
-      "qualification": "DM (Cardiology), PGI",
-      "departmentId": "dept_cardio",
-      "departmentName": "Cardiology",
-      "roomNumber": "Room 102 (1st Floor)",
-      "workingHours": "9:00 AM \u2013 1:00 PM",
-      "avgConsultationMins": 15,
-      "status": "active"
-    },
-    {
-      "_id": "408774fc-80a5-4ecb-bf61-e3f0688a7273",
-      "name": "Dr. Bhavik Solanki",
-      "qualification": "MS (Orthopedics)",
-      "departmentId": "dept_ortho",
-      "departmentName": "Orthopedics",
-      "roomNumber": "OPD Room 8",
-      "workingHours": "10:00 AM \u2013 3:00 PM",
-      "avgConsultationMins": 12,
-      "status": "active"
-    },
-    {
-      "_id": "565cedd8-70df-4aeb-95aa-2c5fa51abb34",
-      "name": "Dr. Kavita Verma",
-      "qualification": "MD (Pediatrics)",
-      "departmentId": "dept_pedia",
-      "departmentName": "Pediatrics",
-      "roomNumber": "Room 205 (2nd Floor)",
-      "workingHours": "9:00 AM \u2013 2:00 PM",
-      "avgConsultationMins": 10,
-      "status": "active"
-    },
-    {
-      "_id": "f2054285-ccc8-4b79-9bf0-21b372d8261a",
-      "userId": "usr_doctor_1",
-      "name": "Dr. Aarav Mehta",
-      "qualification": "MD (Internal Medicine), AIIMS",
-      "departmentId": "dept_gen_med",
-      "departmentName": "General Medicine",
-      "roomNumber": "OPD Room 3",
-      "workingHours": "9:00 AM \u2013 2:00 PM",
-      "avgConsultationMins": 10,
-      "status": "active"
-    },
-    {
-      "_id": "22df4424-92a3-4d75-9ddc-2f07fcb8a626",
-      "name": "Dr. Ananya Roy",
-      "qualification": "DM (Cardiology), PGI",
-      "departmentId": "dept_cardio",
-      "departmentName": "Cardiology",
-      "roomNumber": "Room 102 (1st Floor)",
-      "workingHours": "9:00 AM \u2013 1:00 PM",
-      "avgConsultationMins": 15,
-      "status": "active"
-    },
-    {
-      "_id": "bfdad422-35b0-48b9-a148-25c3849545ba",
-      "name": "Dr. Bhavik Solanki",
-      "qualification": "MS (Orthopedics)",
-      "departmentId": "dept_ortho",
-      "departmentName": "Orthopedics",
-      "roomNumber": "OPD Room 8",
-      "workingHours": "10:00 AM \u2013 3:00 PM",
-      "avgConsultationMins": 12,
-      "status": "active"
-    },
-    {
-      "_id": "df82ca83-0e11-48a5-82bd-e6d77ee12bc6",
-      "name": "Dr. Kavita Verma",
-      "qualification": "MD (Pediatrics)",
-      "departmentId": "dept_pedia",
-      "departmentName": "Pediatrics",
-      "roomNumber": "Room 205 (2nd Floor)",
-      "workingHours": "9:00 AM \u2013 2:00 PM",
-      "avgConsultationMins": 10,
-      "status": "active"
-    },
-    {
-      "_id": "4b9beb69-04b8-44ce-bd07-b86dd076cb8f",
-      "userId": "usr_doctor_1",
-      "name": "Dr. Aarav Mehta",
-      "qualification": "MD (Internal Medicine), AIIMS",
-      "departmentId": "dept_gen_med",
-      "departmentName": "General Medicine",
-      "roomNumber": "OPD Room 3",
-      "workingHours": "9:00 AM \u2013 2:00 PM",
-      "avgConsultationMins": 10,
-      "status": "active"
-    },
-    {
-      "_id": "131c289c-938a-44d1-ac59-45ba95c80e3f",
-      "name": "Dr. Ananya Roy",
-      "qualification": "DM (Cardiology), PGI",
-      "departmentId": "dept_cardio",
-      "departmentName": "Cardiology",
-      "roomNumber": "Room 102 (1st Floor)",
-      "workingHours": "9:00 AM \u2013 1:00 PM",
-      "avgConsultationMins": 15,
-      "status": "active"
-    },
-    {
-      "_id": "05abf64e-57ef-4226-8555-4d4d27a8f2df",
-      "name": "Dr. Bhavik Solanki",
-      "qualification": "MS (Orthopedics)",
-      "departmentId": "dept_ortho",
-      "departmentName": "Orthopedics",
-      "roomNumber": "OPD Room 8",
-      "workingHours": "10:00 AM \u2013 3:00 PM",
-      "avgConsultationMins": 12,
-      "status": "active"
-    },
-    {
-      "_id": "aed35e52-eefd-47c7-bb26-f1147f886319",
+      "_id": "doc_kavita",
       "name": "Dr. Kavita Verma",
       "qualification": "MD (Pediatrics)",
       "departmentId": "dept_pedia",
@@ -488,7 +184,7 @@
   ],
   "labTests": [
     {
-      "_id": "621c5732-777d-4f0d-a64c-44773521824a",
+      "_id": "test_cbc",
       "name": "Complete Blood Count (CBC)",
       "category": "Hematology",
       "price": 100,
@@ -496,7 +192,7 @@
       "instructions": "No special preparation needed."
     },
     {
-      "_id": "ed8089c0-4bac-42e9-9b4e-1e0f18c2d4c8",
+      "_id": "test_lft",
       "name": "Liver Function Test (LFT)",
       "category": "Biochemistry",
       "price": 180,
@@ -504,7 +200,7 @@
       "instructions": "Requires 8 hours overnight fasting."
     },
     {
-      "_id": "ffe99735-7fd7-446d-b0db-a0c6d4018284",
+      "_id": "test_kft",
       "name": "Kidney Function Test / Creatinine",
       "category": "Biochemistry",
       "price": 150,
@@ -512,7 +208,7 @@
       "instructions": "Stay normally hydrated."
     },
     {
-      "_id": "8fe54d27-a142-4db8-8536-7e58b30dbe63",
+      "_id": "test_sugar",
       "name": "Fasting Blood Sugar (FBS)",
       "category": "Biochemistry",
       "price": 50,
@@ -520,7 +216,7 @@
       "instructions": "Strict 8\u201310 hours fasting before sample collection."
     },
     {
-      "_id": "8a002534-3190-47a6-950c-fdb37803a6dd",
+      "_id": "test_lipid",
       "name": "Lipid Profile (Cholesterol)",
       "category": "Cardio-Diagnostics",
       "price": 200,
@@ -528,7 +224,7 @@
       "instructions": "12 hours fasting required."
     },
     {
-      "_id": "d4b2e314-1844-4a3a-8cdd-a801c24e161e",
+      "_id": "test_xray",
       "name": "Chest X-Ray (PA View)",
       "category": "Radiology",
       "price": 150,
@@ -536,7 +232,7 @@
       "instructions": "Remove metal ornaments prior to imaging."
     },
     {
-      "_id": "4c2327de-6436-46fc-9b88-f5e6211649d1",
+      "_id": "test_thyroid",
       "name": "Thyroid Profile (T3, T4, TSH)",
       "category": "Endocrinology",
       "price": 250,
@@ -544,199 +240,7 @@
       "instructions": "Morning empty-stomach sample preferred."
     },
     {
-      "_id": "3beedfe2-f176-49ab-b8f4-bb09e06f78a6",
-      "name": "Urine Routine & Microscopic",
-      "category": "Pathology",
-      "price": 60,
-      "fastingRequired": false,
-      "instructions": "Collect mid-stream clean urine sample."
-    },
-    {
-      "_id": "3fe2c0ff-a09b-4e22-b2e4-9c98201704e5",
-      "name": "Complete Blood Count (CBC)",
-      "category": "Hematology",
-      "price": 100,
-      "fastingRequired": false,
-      "instructions": "No special preparation needed."
-    },
-    {
-      "_id": "6586de53-8d3b-44b5-b2d1-f3af1f1b57fd",
-      "name": "Liver Function Test (LFT)",
-      "category": "Biochemistry",
-      "price": 180,
-      "fastingRequired": true,
-      "instructions": "Requires 8 hours overnight fasting."
-    },
-    {
-      "_id": "f1b38a19-4f64-4bcf-a814-83205aa44c1d",
-      "name": "Kidney Function Test / Creatinine",
-      "category": "Biochemistry",
-      "price": 150,
-      "fastingRequired": false,
-      "instructions": "Stay normally hydrated."
-    },
-    {
-      "_id": "9caf8438-a267-4d2b-bc2a-9a7770cd6676",
-      "name": "Fasting Blood Sugar (FBS)",
-      "category": "Biochemistry",
-      "price": 50,
-      "fastingRequired": true,
-      "instructions": "Strict 8\u201310 hours fasting before sample collection."
-    },
-    {
-      "_id": "ebf4d6f4-5ba5-48d5-a691-45e28238dbf0",
-      "name": "Lipid Profile (Cholesterol)",
-      "category": "Cardio-Diagnostics",
-      "price": 200,
-      "fastingRequired": true,
-      "instructions": "12 hours fasting required."
-    },
-    {
-      "_id": "0fcffb34-9abd-4aef-b38e-ee3779cd4d6b",
-      "name": "Chest X-Ray (PA View)",
-      "category": "Radiology",
-      "price": 150,
-      "fastingRequired": false,
-      "instructions": "Remove metal ornaments prior to imaging."
-    },
-    {
-      "_id": "5d9197d5-f6d5-42fe-8feb-2a1d4b62ad10",
-      "name": "Thyroid Profile (T3, T4, TSH)",
-      "category": "Endocrinology",
-      "price": 250,
-      "fastingRequired": true,
-      "instructions": "Morning empty-stomach sample preferred."
-    },
-    {
-      "_id": "a70ff78e-8dd8-4d71-8c26-20df2cc0b111",
-      "name": "Urine Routine & Microscopic",
-      "category": "Pathology",
-      "price": 60,
-      "fastingRequired": false,
-      "instructions": "Collect mid-stream clean urine sample."
-    },
-    {
-      "_id": "817a2e3c-4ed2-4b8e-94aa-623bf08a2362",
-      "name": "Complete Blood Count (CBC)",
-      "category": "Hematology",
-      "price": 100,
-      "fastingRequired": false,
-      "instructions": "No special preparation needed."
-    },
-    {
-      "_id": "e760a2d9-e933-44b4-88a8-173d80152b7f",
-      "name": "Liver Function Test (LFT)",
-      "category": "Biochemistry",
-      "price": 180,
-      "fastingRequired": true,
-      "instructions": "Requires 8 hours overnight fasting."
-    },
-    {
-      "_id": "1befc402-0940-4a30-a32e-cd49a664c106",
-      "name": "Kidney Function Test / Creatinine",
-      "category": "Biochemistry",
-      "price": 150,
-      "fastingRequired": false,
-      "instructions": "Stay normally hydrated."
-    },
-    {
-      "_id": "8b5b306a-6736-4d49-8a16-4116a95ad807",
-      "name": "Fasting Blood Sugar (FBS)",
-      "category": "Biochemistry",
-      "price": 50,
-      "fastingRequired": true,
-      "instructions": "Strict 8\u201310 hours fasting before sample collection."
-    },
-    {
-      "_id": "16cee930-df75-44c3-9d19-9c22bec42af5",
-      "name": "Lipid Profile (Cholesterol)",
-      "category": "Cardio-Diagnostics",
-      "price": 200,
-      "fastingRequired": true,
-      "instructions": "12 hours fasting required."
-    },
-    {
-      "_id": "e6f23fd8-78cf-4983-9f99-6d710277f4bf",
-      "name": "Chest X-Ray (PA View)",
-      "category": "Radiology",
-      "price": 150,
-      "fastingRequired": false,
-      "instructions": "Remove metal ornaments prior to imaging."
-    },
-    {
-      "_id": "59b4cf6f-a757-41b7-bf7c-5d5b9801f028",
-      "name": "Thyroid Profile (T3, T4, TSH)",
-      "category": "Endocrinology",
-      "price": 250,
-      "fastingRequired": true,
-      "instructions": "Morning empty-stomach sample preferred."
-    },
-    {
-      "_id": "a6066497-e27c-41bd-aa88-245715039c25",
-      "name": "Urine Routine & Microscopic",
-      "category": "Pathology",
-      "price": 60,
-      "fastingRequired": false,
-      "instructions": "Collect mid-stream clean urine sample."
-    },
-    {
-      "_id": "9f44ac4f-3af2-4c31-9ad5-a14b20f02800",
-      "name": "Complete Blood Count (CBC)",
-      "category": "Hematology",
-      "price": 100,
-      "fastingRequired": false,
-      "instructions": "No special preparation needed."
-    },
-    {
-      "_id": "e79b6436-ee3a-4964-81f3-dab157cdd9fd",
-      "name": "Liver Function Test (LFT)",
-      "category": "Biochemistry",
-      "price": 180,
-      "fastingRequired": true,
-      "instructions": "Requires 8 hours overnight fasting."
-    },
-    {
-      "_id": "194c46f2-931a-4785-a968-4b1ef89cb7bd",
-      "name": "Kidney Function Test / Creatinine",
-      "category": "Biochemistry",
-      "price": 150,
-      "fastingRequired": false,
-      "instructions": "Stay normally hydrated."
-    },
-    {
-      "_id": "9096ca27-4cf3-4306-9f68-8da872d6e792",
-      "name": "Fasting Blood Sugar (FBS)",
-      "category": "Biochemistry",
-      "price": 50,
-      "fastingRequired": true,
-      "instructions": "Strict 8\u201310 hours fasting before sample collection."
-    },
-    {
-      "_id": "c0381a36-44fe-4da4-9601-864ed4e657b5",
-      "name": "Lipid Profile (Cholesterol)",
-      "category": "Cardio-Diagnostics",
-      "price": 200,
-      "fastingRequired": true,
-      "instructions": "12 hours fasting required."
-    },
-    {
-      "_id": "4859f567-780b-4c2b-bb61-9f72f67598f6",
-      "name": "Chest X-Ray (PA View)",
-      "category": "Radiology",
-      "price": 150,
-      "fastingRequired": false,
-      "instructions": "Remove metal ornaments prior to imaging."
-    },
-    {
-      "_id": "8705a737-78cf-42d6-a685-6a13db0e3c1a",
-      "name": "Thyroid Profile (T3, T4, TSH)",
-      "category": "Endocrinology",
-      "price": 250,
-      "fastingRequired": true,
-      "instructions": "Morning empty-stomach sample preferred."
-    },
-    {
-      "_id": "987f8fd8-35f7-4c69-8c4c-20f0a04271d8",
+      "_id": "test_urine",
       "name": "Urine Routine & Microscopic",
       "category": "Pathology",
       "price": 60,
@@ -746,7 +250,7 @@
   ],
   "medicines": [
     {
-      "_id": "4e59c1af-7d8f-4418-87a4-8db62675a714",
+      "_id": "med_pcm",
       "name": "Paracetamol 500mg Tablets",
       "generic": "Paracetamol",
       "stock": 850,
@@ -756,7 +260,7 @@
       "dosageType": "Oral"
     },
     {
-      "_id": "b8ababae-6359-4635-98a2-9a4a73e0566e",
+      "_id": "med_amox",
       "name": "Amoxicillin 500mg Capsules",
       "generic": "Amoxicillin",
       "stock": 320,
@@ -766,7 +270,7 @@
       "dosageType": "Oral Antibiotic"
     },
     {
-      "_id": "4ca5c67a-0900-4cf6-b56f-81d1c9d4005e",
+      "_id": "med_cet",
       "name": "Cetirizine 10mg Tablets",
       "generic": "Cetirizine HCl",
       "stock": 640,
@@ -776,7 +280,7 @@
       "dosageType": "Antihistamine"
     },
     {
-      "_id": "9777807e-07b2-4791-8e38-e675f642a6a6",
+      "_id": "med_panto",
       "name": "Pantoprazole 40mg (Gastro-Resistant)",
       "generic": "Pantoprazole",
       "stock": 450,
@@ -786,7 +290,7 @@
       "dosageType": "Antacid"
     },
     {
-      "_id": "3d2ff59b-b096-4780-a4e1-cf104da5d62e",
+      "_id": "med_met",
       "name": "Metformin 500mg SR",
       "generic": "Metformin",
       "stock": 580,
@@ -796,7 +300,7 @@
       "dosageType": "Antidiabetic"
     },
     {
-      "_id": "dc7ab700-458e-4d48-9204-b100cf5e9079",
+      "_id": "med_azith",
       "name": "Azithromycin 500mg",
       "generic": "Azithromycin",
       "stock": 42,
@@ -806,7 +310,7 @@
       "dosageType": "Antibiotic"
     },
     {
-      "_id": "db123923-fda8-4b11-915e-6dd337d69351",
+      "_id": "med_ins",
       "name": "Human Insulin 40 IU/ml",
       "generic": "Regular Insulin",
       "stock": 18,
@@ -816,247 +320,7 @@
       "dosageType": "Injectable"
     },
     {
-      "_id": "e74ced5f-b8b8-44b0-a77d-ff5e3333c6aa",
-      "name": "ORS Powder Sachet (WHO Formula)",
-      "generic": "Oral Rehydration Salts",
-      "stock": 900,
-      "unit": "Sachets",
-      "price": 10.0,
-      "status": "In Stock",
-      "dosageType": "Oral Solution"
-    },
-    {
-      "_id": "5da6d001-a40a-4ab2-a56f-440c616e8b88",
-      "name": "Paracetamol 500mg Tablets",
-      "generic": "Paracetamol",
-      "stock": 850,
-      "unit": "Tablets",
-      "price": 12.0,
-      "status": "In Stock",
-      "dosageType": "Oral"
-    },
-    {
-      "_id": "3915a4f6-5544-4366-9a80-e9d7ae520942",
-      "name": "Amoxicillin 500mg Capsules",
-      "generic": "Amoxicillin",
-      "stock": 320,
-      "unit": "Capsules",
-      "price": 45.0,
-      "status": "In Stock",
-      "dosageType": "Oral Antibiotic"
-    },
-    {
-      "_id": "d8713106-5dad-471e-9eaa-2a198ed171e6",
-      "name": "Cetirizine 10mg Tablets",
-      "generic": "Cetirizine HCl",
-      "stock": 640,
-      "unit": "Tablets",
-      "price": 15.0,
-      "status": "In Stock",
-      "dosageType": "Antihistamine"
-    },
-    {
-      "_id": "a723c35f-1402-4794-869a-38a05fe097f5",
-      "name": "Pantoprazole 40mg (Gastro-Resistant)",
-      "generic": "Pantoprazole",
-      "stock": 450,
-      "unit": "Tablets",
-      "price": 38.0,
-      "status": "In Stock",
-      "dosageType": "Antacid"
-    },
-    {
-      "_id": "3cfdcebc-ab8b-4030-9640-49786ebcf13d",
-      "name": "Metformin 500mg SR",
-      "generic": "Metformin",
-      "stock": 580,
-      "unit": "Tablets",
-      "price": 28.0,
-      "status": "In Stock",
-      "dosageType": "Antidiabetic"
-    },
-    {
-      "_id": "777df1f5-71dd-4232-ad6b-141923eeb6af",
-      "name": "Azithromycin 500mg",
-      "generic": "Azithromycin",
-      "stock": 42,
-      "unit": "Tablets",
-      "price": 75.0,
-      "status": "Low Stock",
-      "dosageType": "Antibiotic"
-    },
-    {
-      "_id": "c038c647-13bc-4de6-a16f-9c9b67e37601",
-      "name": "Human Insulin 40 IU/ml",
-      "generic": "Regular Insulin",
-      "stock": 18,
-      "unit": "Vials",
-      "price": 140.0,
-      "status": "Low Stock",
-      "dosageType": "Injectable"
-    },
-    {
-      "_id": "89ce3f78-6d21-4f27-892b-cd4d37ff2f8e",
-      "name": "ORS Powder Sachet (WHO Formula)",
-      "generic": "Oral Rehydration Salts",
-      "stock": 900,
-      "unit": "Sachets",
-      "price": 10.0,
-      "status": "In Stock",
-      "dosageType": "Oral Solution"
-    },
-    {
-      "_id": "ecf95b5c-eb44-403f-8539-2c03b00316a5",
-      "name": "Paracetamol 500mg Tablets",
-      "generic": "Paracetamol",
-      "stock": 850,
-      "unit": "Tablets",
-      "price": 12.0,
-      "status": "In Stock",
-      "dosageType": "Oral"
-    },
-    {
-      "_id": "e75ab2de-36b3-4bfa-a3d7-9aabcbedc268",
-      "name": "Amoxicillin 500mg Capsules",
-      "generic": "Amoxicillin",
-      "stock": 320,
-      "unit": "Capsules",
-      "price": 45.0,
-      "status": "In Stock",
-      "dosageType": "Oral Antibiotic"
-    },
-    {
-      "_id": "32c20349-ea3a-4a48-9653-f6fcbd1d85ff",
-      "name": "Cetirizine 10mg Tablets",
-      "generic": "Cetirizine HCl",
-      "stock": 640,
-      "unit": "Tablets",
-      "price": 15.0,
-      "status": "In Stock",
-      "dosageType": "Antihistamine"
-    },
-    {
-      "_id": "696276fb-7da0-48c9-80e0-a68883c43300",
-      "name": "Pantoprazole 40mg (Gastro-Resistant)",
-      "generic": "Pantoprazole",
-      "stock": 450,
-      "unit": "Tablets",
-      "price": 38.0,
-      "status": "In Stock",
-      "dosageType": "Antacid"
-    },
-    {
-      "_id": "238ef844-6b24-4a6f-bcda-5eb6e9ce6428",
-      "name": "Metformin 500mg SR",
-      "generic": "Metformin",
-      "stock": 580,
-      "unit": "Tablets",
-      "price": 28.0,
-      "status": "In Stock",
-      "dosageType": "Antidiabetic"
-    },
-    {
-      "_id": "080083c9-4de9-4145-bf81-891c65d62c95",
-      "name": "Azithromycin 500mg",
-      "generic": "Azithromycin",
-      "stock": 42,
-      "unit": "Tablets",
-      "price": 75.0,
-      "status": "Low Stock",
-      "dosageType": "Antibiotic"
-    },
-    {
-      "_id": "60e84795-df5d-40a6-aa22-a66557abad50",
-      "name": "Human Insulin 40 IU/ml",
-      "generic": "Regular Insulin",
-      "stock": 18,
-      "unit": "Vials",
-      "price": 140.0,
-      "status": "Low Stock",
-      "dosageType": "Injectable"
-    },
-    {
-      "_id": "3d6b69e3-b1ff-4c96-953f-9b7fbaeebb28",
-      "name": "ORS Powder Sachet (WHO Formula)",
-      "generic": "Oral Rehydration Salts",
-      "stock": 900,
-      "unit": "Sachets",
-      "price": 10.0,
-      "status": "In Stock",
-      "dosageType": "Oral Solution"
-    },
-    {
-      "_id": "84580556-d926-47c8-8ecb-c730ddc7e9d4",
-      "name": "Paracetamol 500mg Tablets",
-      "generic": "Paracetamol",
-      "stock": 850,
-      "unit": "Tablets",
-      "price": 12.0,
-      "status": "In Stock",
-      "dosageType": "Oral"
-    },
-    {
-      "_id": "c151e598-69c1-4277-9d81-0087193ba69a",
-      "name": "Amoxicillin 500mg Capsules",
-      "generic": "Amoxicillin",
-      "stock": 320,
-      "unit": "Capsules",
-      "price": 45.0,
-      "status": "In Stock",
-      "dosageType": "Oral Antibiotic"
-    },
-    {
-      "_id": "e8a07b2d-2e90-4e6d-a83d-c9062cc3e9be",
-      "name": "Cetirizine 10mg Tablets",
-      "generic": "Cetirizine HCl",
-      "stock": 640,
-      "unit": "Tablets",
-      "price": 15.0,
-      "status": "In Stock",
-      "dosageType": "Antihistamine"
-    },
-    {
-      "_id": "8407a3e6-04ff-45bc-ac97-c82eb1fe98fe",
-      "name": "Pantoprazole 40mg (Gastro-Resistant)",
-      "generic": "Pantoprazole",
-      "stock": 450,
-      "unit": "Tablets",
-      "price": 38.0,
-      "status": "In Stock",
-      "dosageType": "Antacid"
-    },
-    {
-      "_id": "b364d204-777f-4ef1-9f22-732f2186111e",
-      "name": "Metformin 500mg SR",
-      "generic": "Metformin",
-      "stock": 580,
-      "unit": "Tablets",
-      "price": 28.0,
-      "status": "In Stock",
-      "dosageType": "Antidiabetic"
-    },
-    {
-      "_id": "c0570e57-5144-45fd-b429-0eb68f1efd5e",
-      "name": "Azithromycin 500mg",
-      "generic": "Azithromycin",
-      "stock": 42,
-      "unit": "Tablets",
-      "price": 75.0,
-      "status": "Low Stock",
-      "dosageType": "Antibiotic"
-    },
-    {
-      "_id": "185e85a4-2a9a-4453-bc4f-c2e3e0ed9fb8",
-      "name": "Human Insulin 40 IU/ml",
-      "generic": "Regular Insulin",
-      "stock": 18,
-      "unit": "Vials",
-      "price": 140.0,
-      "status": "Low Stock",
-      "dosageType": "Injectable"
-    },
-    {
-      "_id": "7c0af30f-e0f8-4111-a2ee-ec4987800aca",
+      "_id": "med_ors",
       "name": "ORS Powder Sachet (WHO Formula)",
       "generic": "Oral Rehydration Salts",
       "stock": 900,
@@ -1068,7 +332,7 @@
   ],
   "bloodInventory": [
     {
-      "_id": "b3f881ee-f73d-4b06-809a-93fc1d0f4abb",
+      "_id": "bld_a_pos",
       "group": "A+",
       "component": "Whole Blood / PRBC",
       "unitsAvailable": 24,
@@ -1076,7 +340,7 @@
       "expiryWindowDays": 35
     },
     {
-      "_id": "6dd9e119-5fdc-4a4f-9851-baf19d64944a",
+      "_id": "bld_a_neg",
       "group": "A-",
       "component": "Whole Blood / PRBC",
       "unitsAvailable": 6,
@@ -1084,7 +348,7 @@
       "expiryWindowDays": 28
     },
     {
-      "_id": "51b08bd4-3faf-4276-ad3b-86924ff1200c",
+      "_id": "bld_b_pos",
       "group": "B+",
       "component": "Whole Blood / PRBC",
       "unitsAvailable": 32,
@@ -1092,7 +356,7 @@
       "expiryWindowDays": 40
     },
     {
-      "_id": "4d07f4aa-8b30-4313-bfe6-b819b947ba7b",
+      "_id": "bld_b_neg",
       "group": "B-",
       "component": "Whole Blood / PRBC",
       "unitsAvailable": 5,
@@ -1100,7 +364,7 @@
       "expiryWindowDays": 30
     },
     {
-      "_id": "5b7cc900-4e0b-43a9-bf7e-54d08f277105",
+      "_id": "bld_o_pos",
       "group": "O+",
       "component": "Whole Blood / PRBC",
       "unitsAvailable": 45,
@@ -1108,7 +372,7 @@
       "expiryWindowDays": 42
     },
     {
-      "_id": "24190a27-8228-4c23-92d6-d09e764fc758",
+      "_id": "bld_o_neg",
       "group": "O-",
       "component": "Whole Blood (Universal Donor)",
       "unitsAvailable": 4,
@@ -1116,7 +380,7 @@
       "expiryWindowDays": 25
     },
     {
-      "_id": "0ca3a796-3ef7-4933-b86d-e0d74889ce76",
+      "_id": "bld_ab_pos",
       "group": "AB+",
       "component": "Whole Blood / PRBC",
       "unitsAvailable": 14,
@@ -1124,7 +388,7 @@
       "expiryWindowDays": 35
     },
     {
-      "_id": "60d099f6-e656-460f-9a9a-ae11a44fa661",
+      "_id": "bld_ab_neg",
       "group": "AB-",
       "component": "Whole Blood / PRBC",
       "unitsAvailable": 3,
@@ -1132,223 +396,7 @@
       "expiryWindowDays": 20
     },
     {
-      "_id": "42a67639-c52c-4b60-8328-f77b205b77db",
-      "group": "All Groups",
-      "component": "Single Donor Platelets (SDP)",
-      "unitsAvailable": 12,
-      "status": "Available",
-      "expiryWindowDays": 5
-    },
-    {
-      "_id": "0c9d3201-79d7-42a4-b2ca-a49c0c5799a4",
-      "group": "A+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 24,
-      "status": "Available",
-      "expiryWindowDays": 35
-    },
-    {
-      "_id": "3e47102e-4280-46a2-a69d-f3500a60a20a",
-      "group": "A-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 6,
-      "status": "Critical",
-      "expiryWindowDays": 28
-    },
-    {
-      "_id": "c65d0947-96cd-48d9-a417-2334ff9edb57",
-      "group": "B+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 32,
-      "status": "Available",
-      "expiryWindowDays": 40
-    },
-    {
-      "_id": "13dfcef3-c8cc-4224-995e-cc530b482acf",
-      "group": "B-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 5,
-      "status": "Critical",
-      "expiryWindowDays": 30
-    },
-    {
-      "_id": "e3911b33-ab06-484b-926d-14b769e3e099",
-      "group": "O+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 45,
-      "status": "Available",
-      "expiryWindowDays": 42
-    },
-    {
-      "_id": "20aa16d9-3a86-455e-9d45-d02cf2b06bc0",
-      "group": "O-",
-      "component": "Whole Blood (Universal Donor)",
-      "unitsAvailable": 4,
-      "status": "Emergency Reserve",
-      "expiryWindowDays": 25
-    },
-    {
-      "_id": "129f6873-228d-4b9d-8593-6134e98ca648",
-      "group": "AB+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 14,
-      "status": "Available",
-      "expiryWindowDays": 35
-    },
-    {
-      "_id": "b6c5fe8b-1df0-42aa-b6c8-bb3406684469",
-      "group": "AB-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 3,
-      "status": "Critical",
-      "expiryWindowDays": 20
-    },
-    {
-      "_id": "29c93793-bdbf-4011-84ea-db2f07edb0a2",
-      "group": "All Groups",
-      "component": "Single Donor Platelets (SDP)",
-      "unitsAvailable": 12,
-      "status": "Available",
-      "expiryWindowDays": 5
-    },
-    {
-      "_id": "d9c11511-ff79-4669-9a5a-2e3287f68f22",
-      "group": "A+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 24,
-      "status": "Available",
-      "expiryWindowDays": 35
-    },
-    {
-      "_id": "4f9627ed-5f04-43a5-8cfb-23582f8fdf18",
-      "group": "A-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 6,
-      "status": "Critical",
-      "expiryWindowDays": 28
-    },
-    {
-      "_id": "d7b70470-5345-4044-b670-eb8bc45644e9",
-      "group": "B+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 32,
-      "status": "Available",
-      "expiryWindowDays": 40
-    },
-    {
-      "_id": "02727526-ac98-4a2c-8684-85e6ea889208",
-      "group": "B-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 5,
-      "status": "Critical",
-      "expiryWindowDays": 30
-    },
-    {
-      "_id": "0b38ae1e-e7a8-42a1-8930-1b5390892fac",
-      "group": "O+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 45,
-      "status": "Available",
-      "expiryWindowDays": 42
-    },
-    {
-      "_id": "da33d4b1-5625-417b-979a-d9c78fb8d2f7",
-      "group": "O-",
-      "component": "Whole Blood (Universal Donor)",
-      "unitsAvailable": 4,
-      "status": "Emergency Reserve",
-      "expiryWindowDays": 25
-    },
-    {
-      "_id": "69eb2156-8b83-400b-a696-f9248855f42f",
-      "group": "AB+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 14,
-      "status": "Available",
-      "expiryWindowDays": 35
-    },
-    {
-      "_id": "25363297-3232-4c1f-b7a9-4a94b59505ce",
-      "group": "AB-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 3,
-      "status": "Critical",
-      "expiryWindowDays": 20
-    },
-    {
-      "_id": "9e506eeb-95ef-4666-a16d-72cd292eada3",
-      "group": "All Groups",
-      "component": "Single Donor Platelets (SDP)",
-      "unitsAvailable": 12,
-      "status": "Available",
-      "expiryWindowDays": 5
-    },
-    {
-      "_id": "a24516c6-0429-43b7-830a-9184db2e0dab",
-      "group": "A+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 24,
-      "status": "Available",
-      "expiryWindowDays": 35
-    },
-    {
-      "_id": "f3d4ba98-698a-4896-a070-248b8d464543",
-      "group": "A-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 6,
-      "status": "Critical",
-      "expiryWindowDays": 28
-    },
-    {
-      "_id": "e0172552-32b5-41d3-b414-fab18d71ee20",
-      "group": "B+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 32,
-      "status": "Available",
-      "expiryWindowDays": 40
-    },
-    {
-      "_id": "ecbcf0a3-0f89-4282-bddf-f1936c705722",
-      "group": "B-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 5,
-      "status": "Critical",
-      "expiryWindowDays": 30
-    },
-    {
-      "_id": "443879cb-26b6-4fce-8ba8-e6c0a890183c",
-      "group": "O+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 45,
-      "status": "Available",
-      "expiryWindowDays": 42
-    },
-    {
-      "_id": "0062fceb-de1b-45f8-b941-4b48a7d0bf7e",
-      "group": "O-",
-      "component": "Whole Blood (Universal Donor)",
-      "unitsAvailable": 4,
-      "status": "Emergency Reserve",
-      "expiryWindowDays": 25
-    },
-    {
-      "_id": "1b926b1d-259c-4799-93c3-09b573db55bb",
-      "group": "AB+",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 14,
-      "status": "Available",
-      "expiryWindowDays": 35
-    },
-    {
-      "_id": "f47e9f8e-6d1f-4bf1-ba63-a2db578ab068",
-      "group": "AB-",
-      "component": "Whole Blood / PRBC",
-      "unitsAvailable": 3,
-      "status": "Critical",
-      "expiryWindowDays": 20
-    },
-    {
-      "_id": "fc628c61-bed1-4ae9-9812-5860b9efdcdb",
+      "_id": "bld_platelets",
       "group": "All Groups",
       "component": "Single Donor Platelets (SDP)",
       "unitsAvailable": 12,
@@ -1365,7 +413,7 @@
       "y": 420,
       "floor": "Ground Floor",
       "desc": "Information desk, wheelchair assistance & triage.",
-      "_id": "5069317e-21c7-4e42-bf9b-eea1c2904e8d"
+      "_id": "6be52120-b969-4dc6-a665-129d0aa69da7"
     },
     {
       "id": "loc_reg",
@@ -1375,7 +423,7 @@
       "y": 380,
       "floor": "Ground Floor",
       "desc": "Counter 1-4 for walk-in slips and appointment check-in.",
-      "_id": "49353cc1-d1a5-421b-bbf7-50fc8f4d79f6"
+      "_id": "e06c7596-d2cf-449e-9f6d-9643bcb1fed6"
     },
     {
       "id": "loc_opd_med",
@@ -1385,7 +433,7 @@
       "y": 280,
       "floor": "Ground Floor",
       "desc": "Dr. Aarav Mehta consulting room & waiting lounge.",
-      "_id": "64f66b4e-3be8-4a0b-8364-eeb760abdb78"
+      "_id": "16b72701-0e3c-4c4b-9e95-14cd9a75bc37"
     },
     {
       "id": "loc_opd_ortho",
@@ -1395,7 +443,7 @@
       "y": 280,
       "floor": "Ground Floor",
       "desc": "Dr. Bhavik Solanki consultation & plaster room.",
-      "_id": "a0fd2bd9-3a86-4686-8726-8daebd0636f5"
+      "_id": "e325bcf2-4ac7-454c-b125-bb51734afc23"
     },
     {
       "id": "loc_lab",
@@ -1405,7 +453,7 @@
       "y": 140,
       "floor": "Ground Floor",
       "desc": "Sample collection counters 1-6 and report dispatch.",
-      "_id": "43fd5a08-5c15-4631-979c-51972311e8bc"
+      "_id": "126c009b-2965-427d-8051-9292c4a285b3"
     },
     {
       "id": "loc_pharmacy",
@@ -1415,7 +463,7 @@
       "y": 200,
       "floor": "Ground Floor",
       "desc": "Medicine collection counters 1-4 with digital queue display.",
-      "_id": "f051f851-5e1b-4ecb-9836-349f2ebd7ad3"
+      "_id": "b8ce7f85-b042-4e2c-8ca7-2718ad78e94d"
     },
     {
       "id": "loc_bloodbank",
@@ -1425,7 +473,7 @@
       "y": 140,
       "floor": "Ground Floor",
       "desc": "Blood matching, storage and donation donor unit.",
-      "_id": "8cd8c360-ff74-4555-85d9-2a10402f29a2"
+      "_id": "a8a50be9-31f7-45cc-82f3-b64cf51aec23"
     },
     {
       "id": "loc_billing",
@@ -1435,7 +483,7 @@
       "y": 290,
       "floor": "Ground Floor",
       "desc": "Cash receipts, PM-JAY and digital UPI counter.",
-      "_id": "d7c8b691-2c86-43f3-aa08-1b60b53eafa5"
+      "_id": "d8990669-3ebc-4579-af4e-320c11a5ed1e"
     },
     {
       "id": "loc_emergency",
@@ -1445,7 +493,7 @@
       "y": 160,
       "floor": "Ground Floor",
       "desc": "24/7 dedicated ambulance bay and trauma center.",
-      "_id": "46e716ab-23b3-4549-bdeb-76c338618e63"
+      "_id": "3fe40c39-5bcc-47e6-8d6d-0e47564d354e"
     },
     {
       "id": "loc_lift",
@@ -1455,7 +503,7 @@
       "y": 250,
       "floor": "Ground Floor",
       "desc": "Braille-assisted lifts and wide ramp connecting Floor 1 & 2.",
-      "_id": "fcd6f64a-2e92-4d92-993e-5b1afad18bbf"
+      "_id": "5f3c284a-c874-4a65-9e93-6c470a2e4c0f"
     },
     {
       "id": "loc_restroom",
@@ -1465,7 +513,7 @@
       "y": 380,
       "floor": "Ground Floor",
       "desc": "Divyangjan accessible washrooms & water stations.",
-      "_id": "facd4a4a-3250-4a91-99e9-abc0ed30d5b8"
+      "_id": "9915a750-5718-44c8-b51e-ec34bb283114"
     }
   ],
   "transportLocations": [
@@ -1476,7 +524,7 @@
       "distance": "50m (1 min walk)",
       "routes": "AMTS Routes: 40/1, 58, 66, 102",
       "freq": "Every 5 mins",
-      "_id": "412740ae-642b-458d-a89b-2b04aa7a6342"
+      "_id": "9f28cb39-8265-476a-848f-cfd8e95cdc54"
     },
     {
       "id": "tr_metro_1",
@@ -1485,7 +533,7 @@
       "distance": "220m (3 min walk)",
       "routes": "Platform 1 & 2 toward APMC / Motera",
       "freq": "Every 8 mins",
-      "_id": "c3ff36d6-bfec-4c3a-992a-f20080651d04"
+      "_id": "0bda9981-4806-4e62-89a7-fb0145d39541"
     },
     {
       "id": "tr_auto_1",
@@ -1494,7 +542,7 @@
       "distance": "80m",
       "routes": "Authorized meter stands with RTO prepaid kiosk",
       "freq": "24/7 Available",
-      "_id": "3b4ba756-4ee0-4c1c-a02f-b50a0907b89b"
+      "_id": "d21b4954-320b-4895-bd30-d94402c04dfd"
     },
     {
       "id": "tr_parking_1",
@@ -1503,15 +551,15 @@
       "distance": "120m",
       "routes": "Free 2-wheeler and subsidized 4-wheeler parking",
       "freq": "Open 24 Hours",
-      "_id": "1b19505f-aa8c-47b7-903f-908a13c0e400"
+      "_id": "48f2d039-7450-4498-bf10-61ad6605ea43"
     }
   ],
   "queues": [
     {
-      "_id": "8335a852-f820-4881-bc2d-1aa8a535c184",
+      "_id": "q_dept_gen_med",
       "departmentId": "dept_gen_med",
       "departmentName": "General Medicine",
-      "currentToken": "OPD-014",
+      "currentToken": "OPD-013",
       "servingDoctor": "Dr. Aarav Mehta",
       "room": "OPD Room 3",
       "status": "active",
@@ -1520,7 +568,7 @@
       "avgWaitMins": 15
     },
     {
-      "_id": "001c5da5-6bf7-4b5f-b565-14e89169773e",
+      "_id": "q_dept_cardio",
       "departmentId": "dept_cardio",
       "departmentName": "Cardiology",
       "currentToken": "CARD-005",
@@ -1532,7 +580,7 @@
       "avgWaitMins": 20
     },
     {
-      "_id": "8b1ceca3-880f-4001-a578-190221beba10",
+      "_id": "q_lab",
       "departmentId": "lab",
       "departmentName": "Pathology Laboratory",
       "currentToken": "LAB-008",
@@ -1544,151 +592,7 @@
       "avgWaitMins": 8
     },
     {
-      "_id": "6b9b0f97-88e6-4a96-91ab-ed1c2979d329",
-      "departmentId": "pharmacy",
-      "departmentName": "Pharmacy Dispensary",
-      "currentToken": "PHARM-015",
-      "servingDoctor": "Vikram Desai (Counter 2)",
-      "room": "Dispensing Counter 2",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 5,
-      "avgWaitMins": 6
-    },
-    {
-      "_id": "9e287957-ef74-4964-9d35-2ef0d2119378",
-      "departmentId": "dept_gen_med",
-      "departmentName": "General Medicine",
-      "currentToken": "OPD-012",
-      "servingDoctor": "Dr. Aarav Mehta",
-      "room": "OPD Room 3",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 4,
-      "avgWaitMins": 15
-    },
-    {
-      "_id": "4ed2d9e0-9238-41e5-b10e-ced97dca969b",
-      "departmentId": "dept_cardio",
-      "departmentName": "Cardiology",
-      "currentToken": "CARD-005",
-      "servingDoctor": "Dr. Ananya Roy",
-      "room": "Room 102",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 2,
-      "avgWaitMins": 20
-    },
-    {
-      "_id": "4aed18a6-9d7d-4fab-9c4c-31ca1ff891bb",
-      "departmentId": "lab",
-      "departmentName": "Pathology Laboratory",
-      "currentToken": "LAB-008",
-      "servingDoctor": "Priya Sharma (Counter 3)",
-      "room": "Sample Counter 3",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 3,
-      "avgWaitMins": 8
-    },
-    {
-      "_id": "18623f36-67b6-49a3-b8c0-11678d170176",
-      "departmentId": "pharmacy",
-      "departmentName": "Pharmacy Dispensary",
-      "currentToken": "PHARM-015",
-      "servingDoctor": "Vikram Desai (Counter 2)",
-      "room": "Dispensing Counter 2",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 5,
-      "avgWaitMins": 6
-    },
-    {
-      "_id": "77234306-b005-46b5-bcba-d034848d0d47",
-      "departmentId": "dept_gen_med",
-      "departmentName": "General Medicine",
-      "currentToken": "OPD-012",
-      "servingDoctor": "Dr. Aarav Mehta",
-      "room": "OPD Room 3",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 4,
-      "avgWaitMins": 15
-    },
-    {
-      "_id": "2ad1d710-8868-4629-ac21-7e3376db6b3c",
-      "departmentId": "dept_cardio",
-      "departmentName": "Cardiology",
-      "currentToken": "CARD-005",
-      "servingDoctor": "Dr. Ananya Roy",
-      "room": "Room 102",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 2,
-      "avgWaitMins": 20
-    },
-    {
-      "_id": "07d5ee45-3426-47b2-99cb-81503b0a0399",
-      "departmentId": "lab",
-      "departmentName": "Pathology Laboratory",
-      "currentToken": "LAB-008",
-      "servingDoctor": "Priya Sharma (Counter 3)",
-      "room": "Sample Counter 3",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 3,
-      "avgWaitMins": 8
-    },
-    {
-      "_id": "a1985454-4ad4-4655-95ea-e2dccbdc0dd8",
-      "departmentId": "pharmacy",
-      "departmentName": "Pharmacy Dispensary",
-      "currentToken": "PHARM-015",
-      "servingDoctor": "Vikram Desai (Counter 2)",
-      "room": "Dispensing Counter 2",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 5,
-      "avgWaitMins": 6
-    },
-    {
-      "_id": "897f85c6-4f61-416e-9a25-c9870e60336c",
-      "departmentId": "dept_gen_med",
-      "departmentName": "General Medicine",
-      "currentToken": "OPD-012",
-      "servingDoctor": "Dr. Aarav Mehta",
-      "room": "OPD Room 3",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 4,
-      "avgWaitMins": 15
-    },
-    {
-      "_id": "accf8090-ccf7-4cfc-989c-e78d5f8c1534",
-      "departmentId": "dept_cardio",
-      "departmentName": "Cardiology",
-      "currentToken": "CARD-005",
-      "servingDoctor": "Dr. Ananya Roy",
-      "room": "Room 102",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 2,
-      "avgWaitMins": 20
-    },
-    {
-      "_id": "8eb79908-f3ab-4f45-9fc9-8b273b853d60",
-      "departmentId": "lab",
-      "departmentName": "Pathology Laboratory",
-      "currentToken": "LAB-008",
-      "servingDoctor": "Priya Sharma (Counter 3)",
-      "room": "Sample Counter 3",
-      "status": "active",
-      "pauseReason": "",
-      "waitingCount": 3,
-      "avgWaitMins": 8
-    },
-    {
-      "_id": "f4b96281-65d2-4365-910a-bb414d8515fd",
+      "_id": "q_pharmacy",
       "departmentId": "pharmacy",
       "departmentName": "Pharmacy Dispensary",
       "currentToken": "PHARM-015",
@@ -1709,7 +613,7 @@
       "status": "served",
       "priority": "normal",
       "serviceCounter": "OPD Room 3",
-      "_id": "c59105e1-12ad-493c-8393-cef33ec8f904"
+      "_id": "a852e17d-8223-4cc1-9581-9ee2e9ee3aa9"
     },
     {
       "tokenNumber": "OPD-011",
@@ -1719,7 +623,7 @@
       "status": "served",
       "priority": "normal",
       "serviceCounter": "OPD Room 3",
-      "_id": "887d00b1-b168-4eec-abbd-4669d8ec62a9"
+      "_id": "0b568cae-7378-4a1f-a0c4-110bf491e97d"
     },
     {
       "tokenNumber": "OPD-012",
@@ -1729,18 +633,18 @@
       "status": "in_consultation",
       "priority": "normal",
       "serviceCounter": "OPD Room 3",
-      "_id": "4ffc33e7-708e-4616-a34c-d9afe188c32d",
-      "completedAt": "2026-10-17T07:33:42.004819"
+      "_id": "93f367f2-2760-4cdf-be34-05f4ea9fb015"
     },
     {
       "tokenNumber": "OPD-013",
       "patientName": "Dinesh Solanki",
       "patientPhone": "9825100003",
       "departmentId": "dept_gen_med",
-      "status": "waiting",
+      "status": "in_consultation",
       "priority": "normal",
       "serviceCounter": "OPD Room 3",
-      "_id": "609995c5-470e-42bf-982c-b9409efa1a91"
+      "_id": "2d2b5dea-0abf-4fb0-a0de-08ec854f74b7",
+      "calledAt": "2026-10-17T08:21:17.146586"
     },
     {
       "tokenNumber": "OPD-014",
@@ -1751,8 +655,7 @@
       "priority": "urgent",
       "serviceCounter": "OPD Room 3",
       "priorityReason": "High fever with chills",
-      "_id": "26c5ad73-e5c4-438d-9ac4-a17d5e2b04b6",
-      "calledAt": "2026-10-17T07:33:42.021117"
+      "_id": "df7b4bc8-850d-4b7f-bd66-2e508b9ef944"
     },
     {
       "tokenNumber": "LAB-008",
@@ -1762,7 +665,7 @@
       "status": "waiting",
       "priority": "normal",
       "serviceCounter": "Sample Counter 3",
-      "_id": "90d9497e-a2f5-4c78-988a-250070966b16"
+      "_id": "9c7dec11-7294-4dd5-8410-e4d7ed571ab2"
     },
     {
       "tokenNumber": "PHARM-015",
@@ -1772,108 +675,12 @@
       "status": "waiting",
       "priority": "normal",
       "serviceCounter": "Dispensing Counter 2",
-      "_id": "e600e140-e10d-481d-a120-45336c0ce64e"
+      "_id": "98144609-ab0a-4200-8d4e-c5ded26ddf06"
     }
   ],
   "bills": [
     {
-      "_id": "981cd592-ba70-4c9b-b5eb-a8b65f2ee246",
-      "invoiceNumber": "QS-INV-2026-0891",
-      "patientId": "usr_patient_1",
-      "patientName": "Ramesh Patel",
-      "items": [
-        {
-          "name": "OPD Consultation (General Medicine)",
-          "qty": 1,
-          "rate": 50,
-          "total": 50
-        },
-        {
-          "name": "Complete Blood Count (CBC) Lab Test",
-          "qty": 1,
-          "rate": 100,
-          "total": 100
-        },
-        {
-          "name": "Paracetamol 500mg (10 tabs)",
-          "qty": 1,
-          "rate": 12,
-          "total": 12
-        }
-      ],
-      "subtotal": 162.0,
-      "concession": 0.0,
-      "total": 162.0,
-      "status": "pending",
-      "paymentMode": null,
-      "receiptNo": null
-    },
-    {
-      "_id": "13bd3b5e-3e4f-4f72-b13e-768a2283448e",
-      "invoiceNumber": "QS-INV-2026-0891",
-      "patientId": "usr_patient_1",
-      "patientName": "Ramesh Patel",
-      "items": [
-        {
-          "name": "OPD Consultation (General Medicine)",
-          "qty": 1,
-          "rate": 50,
-          "total": 50
-        },
-        {
-          "name": "Complete Blood Count (CBC) Lab Test",
-          "qty": 1,
-          "rate": 100,
-          "total": 100
-        },
-        {
-          "name": "Paracetamol 500mg (10 tabs)",
-          "qty": 1,
-          "rate": 12,
-          "total": 12
-        }
-      ],
-      "subtotal": 162.0,
-      "concession": 0.0,
-      "total": 162.0,
-      "status": "pending",
-      "paymentMode": null,
-      "receiptNo": null
-    },
-    {
-      "_id": "a613b0d2-260f-4388-9521-1f2656d4f3c2",
-      "invoiceNumber": "QS-INV-2026-0891",
-      "patientId": "usr_patient_1",
-      "patientName": "Ramesh Patel",
-      "items": [
-        {
-          "name": "OPD Consultation (General Medicine)",
-          "qty": 1,
-          "rate": 50,
-          "total": 50
-        },
-        {
-          "name": "Complete Blood Count (CBC) Lab Test",
-          "qty": 1,
-          "rate": 100,
-          "total": 100
-        },
-        {
-          "name": "Paracetamol 500mg (10 tabs)",
-          "qty": 1,
-          "rate": 12,
-          "total": 12
-        }
-      ],
-      "subtotal": 162.0,
-      "concession": 0.0,
-      "total": 162.0,
-      "status": "pending",
-      "paymentMode": null,
-      "receiptNo": null
-    },
-    {
-      "_id": "f1fe097f-174f-4e72-9da4-50bd7c6e056a",
+      "_id": "bill_ramesh_001",
       "invoiceNumber": "QS-INV-2026-0891",
       "patientId": "usr_patient_1",
       "patientName": "Ramesh Patel",
@@ -1907,75 +714,42 @@
   ],
   "auditLogs": [
     {
-      "timestamp": "2026-10-17T07:33:41.774507",
-      "userId": "usr_patient_1",
-      "username": "patient@queueseva.gov.in",
-      "role": "patient",
+      "timestamp": "2026-10-17T08:21:03.745758",
+      "userId": "usr_staff_1",
+      "username": "staff@queueseva.gov.in",
+      "role": "staff",
       "action": "LOGIN_SUCCESS",
       "details": {
         "ip": "127.0.0.1"
       },
       "ipAddress": "127.0.0.1",
-      "_id": "4d0108c8-62dc-410c-b36a-6b9a6ed4c445"
+      "_id": "18bf99fe-e15d-4536-b572-dcd60cd16114"
     },
     {
-      "timestamp": "2026-10-17T07:33:41.865035",
-      "userId": "usr_patient_1",
-      "username": "patient@queueseva.gov.in",
-      "role": "patient",
-      "action": "APPOINTMENT_BOOKED",
-      "details": {
-        "apptId": "QS-APT-78604",
-        "dept": "General OPD"
-      },
-      "ipAddress": "127.0.0.1",
-      "_id": "9cc19a8d-c1c4-4d92-95a7-56ea97c1c4a5"
-    },
-    {
-      "timestamp": "2026-10-17T07:33:41.955606",
-      "userId": "usr_doctor_1",
-      "username": "doctor@queueseva.gov.in",
-      "role": "doctor",
+      "timestamp": "2026-10-17T08:21:17.111389",
+      "userId": "usr_staff_1",
+      "username": "staff@queueseva.gov.in",
+      "role": "staff",
       "action": "LOGIN_SUCCESS",
       "details": {
         "ip": "127.0.0.1"
       },
       "ipAddress": "127.0.0.1",
-      "_id": "137c8771-0143-42b9-a065-4c9e55eb9dc2"
+      "_id": "82ceda80-615a-411c-b978-6386e22e8735"
     },
     {
-      "timestamp": "2026-10-17T07:33:42.040211",
-      "userId": "usr_doctor_1",
-      "username": "doctor@queueseva.gov.in",
-      "role": "doctor",
-      "action": "CONSULTATION_STARTED",
+      "timestamp": "2026-10-17T08:21:17.168586",
+      "userId": "usr_staff_1",
+      "username": "staff@queueseva.gov.in",
+      "role": "staff",
+      "action": "PATIENT_PROCESSED_TO_DOCTOR",
       "details": {
-        "token": "OPD-014"
+        "token": "OPD-013",
+        "room": "OPD Room 3",
+        "doctor": "Dr. Aarav Mehta"
       },
       "ipAddress": "127.0.0.1",
-      "_id": "8b5583ed-431f-461e-b014-d5a9881da0c7"
-    }
-  ],
-  "appointments": [
-    {
-      "_id": "09d854e7-9e38-4d38-a92e-cfa975aa355e",
-      "appointmentId": "QS-APT-78604",
-      "patientId": "usr_patient_1",
-      "patientName": "Ramesh Patel",
-      "patientPhone": "+91 98765 43210",
-      "departmentId": "dept_gen_med",
-      "departmentName": "General OPD",
-      "doctorId": null,
-      "doctorName": "Consulting Doctor",
-      "roomNumber": "Room 3",
-      "date": "2026-10-17",
-      "timeRangeKey": "morning_mid",
-      "slotTime": "12:00 PM",
-      "arrivalWindow": "11:45 AM \u2013 11:55 AM",
-      "attendantName": "",
-      "status": "confirmed",
-      "tokenNumber": null,
-      "createdAt": "2026-10-17T07:33:41.863039"
+      "_id": "1f254536-3f6f-405b-a510-9cbefc8e5f69"
     }
   ]
 }

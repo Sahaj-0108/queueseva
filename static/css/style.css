@@ -591,3 +591,152 @@ header.app-header {
         width: 100%;
     }
 }
+
+/* ==========================================================================
+   Login Window & Authentication Portal Styles
+   ========================================================================== */
+.login-screen-wrapper {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: radial-gradient(circle at top, #e0f2fe 0%, #f8fafc 70%);
+}
+
+.login-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    max-width: 620px;
+    width: 100%;
+    padding: 32px;
+}
+
+.login-header-emblem {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #0284c7, #0f766e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: 0 auto 12px;
+}
+
+.login-role-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.login-role-chip {
+    padding: 10px 8px;
+    border: 2px solid var(--border-color);
+    background: #f8fafc;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.15s ease;
+}
+
+.login-role-chip:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.login-role-chip.selected {
+    border-color: var(--primary);
+    background: #e0f2fe;
+    color: var(--primary-dark);
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
+}
+
+.quick-cred-box {
+    background: #f1f5f9;
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin-top: 16px;
+    font-size: 0.84rem;
+}
+
+.quick-cred-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.quick-btn {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.15s ease;
+}
+
+.quick-btn:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+/* Doctor Room Availability Cards */
+.doctor-rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.doctor-room-card {
+    background: #ffffff;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    transition: all 0.2s ease;
+}
+
+.doctor-room-card.is-free {
+    border-color: #86efac;
+    background: #f0fdf4;
+}
+
+.doctor-room-card.is-busy {
+    border-color: #fca5a5;
+    background: #fff5f5;
+}
+
+.status-pill-free {
+    background: #22c55e;
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.status-pill-busy {
+    background: #ef4444;
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+

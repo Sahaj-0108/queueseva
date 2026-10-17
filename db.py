@@ -96,8 +96,9 @@ class MockCollection:
             doc = dict(query)
             if "$set" in update:
                 doc.update(update["$set"])
-            import uuid
-            doc["_id"] = str(uuid.uuid4())
+            if "_id" not in doc:
+                import uuid
+                doc["_id"] = str(uuid.uuid4())
             data.append(doc)
             self._save_data(data)
             modified = 1

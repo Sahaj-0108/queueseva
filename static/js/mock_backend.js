@@ -45,6 +45,15 @@
             { _id: "dept_pedia", name: "Pediatrics", code: "PED", floor: "2nd Floor", wing: "Wing A", fee: 50 },
             { _id: "dept_gynec", name: "Gynecology & Obstetrics", code: "GYN", floor: "1st Floor", wing: "Wing C", fee: 60 }
         ],
+        doctors: [
+            { _id: "doc_aarav", name: "Dr. Aarav Mehta", departmentId: "dept_gen_med", departmentName: "General Medicine", roomNumber: "OPD Room 3", consultationStatus: "busy", currentPatient: { tokenNumber: "OPD-012", patientName: "Ramesh Patel", patientPhone: "9876543210" } },
+            { _id: "doc_bhavik", name: "Dr. Bhavik Solanki", departmentId: "dept_ortho", departmentName: "Orthopedics", roomNumber: "OPD Room 8", consultationStatus: "free", currentPatient: null },
+            { _id: "doc_ananya", name: "Dr. Ananya Roy", departmentId: "dept_cardio", departmentName: "Cardiology", roomNumber: "Room 102", consultationStatus: "free", currentPatient: null }
+        ],
+        consultedPatients: [
+            { tokenNumber: "OPD-010", patientName: "Kantilal Shah", doctorName: "Dr. Aarav Mehta", roomNumber: "OPD Room 3", completedAt: "10:15 AM", status: "Consulted & Free" },
+            { tokenNumber: "OPD-011", patientName: "Fatima Bi", doctorName: "Dr. Aarav Mehta", roomNumber: "OPD Room 3", completedAt: "10:35 AM", status: "Consulted & Free" }
+        ],
         locations: [
             { id: "loc_entrance", name: "Main Hospital Gate & Reception", type: "entrance", x: 125, y: 415, floor: "Ground Floor", desc: "Information desk, wheelchair assistance & triage." },
             { id: "loc_reg", name: "Registration & Check-In Counter", type: "counter", x: 270, y: 380, floor: "Ground Floor", desc: "Counter 1-4 for walk-in slips and appointment check-in." },
@@ -241,26 +250,107 @@
                 });
             }
 
+            if (url.includes("/api/doctors/status")) {
+                return mockResponse(store.doctors || []);
+            }
+
+            if (url.includes("/api/staff/process-to-doctor")) {
+                const docId = body.doctorId || "doc_aarav";
+                const doc = (store.doctors || []).find(d => d._id === docId) || store.doctors[0];
+                let token = null;
+
+                if (body.tokenNumber) {
+                    token = store.tokens.find(t => t.tokenNumber === body.tokenNumber);
+                } else {
+                    token = store.tokens.find(t => t.departmentId === doc.departmentId && t.status === "waiting");
+                }
+
+                if (!token) {
+                    return mockResponse({ error: "No waiting patients found for this department." }, 400);
+                }
+
+                token.status = "in_consultation";
+                token.serviceCounter = doc.roomNumber;
+                doc.consultationStatus = "busy";
+                doc.currentPatient = token;
+                saveStore(store);
+
+                const lang = body.language || "en";
+                let announcement = `Token number ${token.tokenNumber}, please proceed to ${doc.roomNumber} for consultation with ${doc.name}.`;
+                if (lang === "hi") {
+                    announcement = `टोकन नंबर ${token.tokenNumber}, कृपया ${doc.roomNumber} में पधारें।`;
+                } else if (lang === "gu") {
+                    announcement = `ટોકન નંબર ${token.tokenNumber}, કૃપા કરીને ${doc.roomNumber} માં જાવ.`;
+                }
+
+                return mockResponse({
+                    message: `Token ${token.tokenNumber} sent to ${doc.name} (${doc.roomNumber})`,
+                    announcementText: announcement,
+                    token,
+                    doctor: doc
+                });
+            }
+
             if (url.includes("/api/doctor/queue")) {
+                const doc = (store.doctors || []).find(d => d.consultationStatus === "busy");
                 return mockResponse({
                     queue: store.tokens.filter(t => t.status === "waiting" || t.status === "in_consultation"),
-                    currentPatient: store.tokens.find(t => t.status === "in_consultation") || store.tokens[0]
+                    currentPatient: (doc && doc.currentPatient) || store.tokens.find(t => t.status === "in_consultation") || null
                 });
             }
 
             if (url.includes("/api/doctor/consultation/call-next")) {
                 const nextT = store.tokens.find(t => t.status === "waiting") || store.tokens[0];
-                if (nextT) nextT.status = "in_consultation";
+                const doc = (store.doctors || [])[0];
+                if (nextT) {
+                    nextT.status = "in_consultation";
+                    if (doc) {
+                        doc.consultationStatus = "busy";
+                        doc.currentPatient = nextT;
+                    }
+                }
                 saveStore(store);
                 return mockResponse({
                     message: "Called",
                     token: nextT,
-                    announcementText: `Token number ${nextT.tokenNumber}, please proceed to OPD Room 3.`
+                    announcementText: `Token number ${nextT ? nextT.tokenNumber : '---'}, please proceed to OPD Room 3.`
                 });
             }
 
             if (url.includes("/api/doctor/consultation/finish")) {
-                return mockResponse({ message: "Finished", prescription: { id: "QS-RX-1" } });
+                const tokenNum = body.tokenNumber || "OPD-012";
+                const token = store.tokens.find(t => t.tokenNumber === tokenNum);
+                const doc = (store.doctors || [])[0];
+
+                if (token) {
+                    token.status = "served";
+                    token.completedAt = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                }
+
+                if (doc) {
+                    doc.consultationStatus = "free";
+                    doc.currentPatient = null;
+                }
+
+                if (!store.consultedPatients) store.consultedPatients = [];
+                store.consultedPatients.unshift({
+                    tokenNumber: tokenNum,
+                    patientName: token ? token.patientName : "Consulted Citizen",
+                    doctorName: doc ? doc.name : "Dr. Aarav Mehta",
+                    roomNumber: doc ? doc.roomNumber : "OPD Room 3",
+                    completedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    status: "Consulted & Free"
+                });
+
+                saveStore(store);
+                return mockResponse({
+                    message: "Consultation finalized, patient removed from queue, doctor is now FREE!",
+                    prescription: { id: "QS-RX-" + Math.floor(1000 + Math.random() * 9000) }
+                });
+            }
+
+            if (url.includes("/api/doctor/consulted-today")) {
+                return mockResponse(store.consultedPatients || []);
             }
 
             if (url.includes("/api/staff/walkin-token")) {

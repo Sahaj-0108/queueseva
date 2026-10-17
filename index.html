@@ -59,10 +59,96 @@
     </header>
 
     <!-- 3. Main Container -->
+    <!-- 3. Main Container -->
     <main class="app-container">
 
+        <!-- ==========================================================================
+             VIEW 0: LOGIN WINDOW & AUTHENTICATION PORTAL (FIRST VIEW)
+             ========================================================================== -->
+        <section id="view_login" class="dashboard-view">
+            <div class="login-screen-wrapper">
+                <div class="login-card">
+                    <div class="login-header-emblem">QS</div>
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h2 style="color: var(--primary-dark); font-size: 1.6rem; font-weight: 800;">Hospital Portal Single Sign-On</h2>
+                        <p style="color: var(--text-muted); font-size: 0.92rem; margin-top: 4px;">
+                            Official Smart Healthcare & Queue Management Authentication System
+                        </p>
+                    </div>
+
+                    <div style="font-size: 0.88rem; font-weight: 700; color: #475569; margin-bottom: 8px;">
+                        Select Your Healthcare Role to Sign In:
+                    </div>
+                    <div class="login-role-selector">
+                        <div class="login-role-chip selected" onclick="App.selectLoginRole('patient', this)">
+                            <div style="font-size: 1.2rem;">👤</div><div>Patient / Citizen</div>
+                        </div>
+                        <div class="login-role-chip" onclick="App.selectLoginRole('doctor', this)">
+                            <div style="font-size: 1.2rem;">👨‍⚕️</div><div>OPD Doctor</div>
+                        </div>
+                        <div class="login-role-chip" onclick="App.selectLoginRole('staff', this)">
+                            <div style="font-size: 1.2rem;">🧑‍💼</div><div>Hospital Staff</div>
+                        </div>
+                        <div class="login-role-chip" onclick="App.selectLoginRole('lab', this)">
+                            <div style="font-size: 1.2rem;">🧪</div><div>Pathology Lab</div>
+                        </div>
+                        <div class="login-role-chip" onclick="App.selectLoginRole('pharmacy', this)">
+                            <div style="font-size: 1.2rem;">💊</div><div>Jan Aushadhi</div>
+                        </div>
+                        <div class="login-role-chip" onclick="App.selectLoginRole('bloodbank', this)">
+                            <div style="font-size: 1.2rem;">🩸</div><div>Blood Bank</div>
+                        </div>
+                        <div class="login-role-chip" onclick="App.selectLoginRole('admin', this)">
+                            <div style="font-size: 1.2rem;">📊</div><div>Admin / Supt.</div>
+                        </div>
+                    </div>
+
+                    <form onsubmit="App.loginFormSubmit(event)">
+                        <div class="form-group">
+                            <label class="form-label">Official Registered Email / Phone</label>
+                            <input type="text" id="loginEmailInput" class="form-control" value="patient@queueseva.gov.in" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Password</label>
+                            <input type="password" id="loginPasswordInput" class="form-control" value="patient123" required>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 0.85rem;">
+                            <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <input type="checkbox" checked> Remember session
+                            </label>
+                            <span style="color: #64748b;">Default Demo Password: <code>role123</code></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1.05rem;">
+                            🔐 Sign In to Hospital Dashboard
+                        </button>
+                    </form>
+
+                    <!-- Fast Demo One-Click Sign-Ins -->
+                    <div class="quick-cred-box">
+                        <div style="font-weight: 700; color: #334155;">⚡ Fast Demo Sign-In (1-Click Instant Access):</div>
+                        <div class="quick-cred-chips">
+                            <button type="button" class="quick-btn" onclick="App.quickLoginAs('patient')">👤 Ramesh Patel (Patient)</button>
+                            <button type="button" class="quick-btn" onclick="App.quickLoginAs('doctor')">👨‍⚕️ Dr. Aarav Mehta (OPD Doctor)</button>
+                            <button type="button" class="quick-btn" onclick="App.quickLoginAs('staff')">🧑‍💼 Sunil Joshi (Staff Check-in)</button>
+                            <button type="button" class="quick-btn" onclick="App.quickLoginAs('lab')">🧪 Priya Sharma (Lab Tech)</button>
+                            <button type="button" class="quick-btn" onclick="App.quickLoginAs('pharmacy')">💊 Vikram Desai (Pharmacist)</button>
+                            <button type="button" class="quick-btn" onclick="App.quickLoginAs('bloodbank')">🩸 Dr. Neha Shah (Blood Bank)</button>
+                            <button type="button" class="quick-btn" onclick="App.quickLoginAs('admin')">📊 H. M. Trivedi (Admin)</button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 14px; font-size: 0.88rem;">
+                        <span style="color: #64748b;">Critical Patient?</span>
+                        <button type="button" class="btn btn-sm btn-danger" style="margin-left: 8px;" onclick="App.triggerEmergency()">
+                            🚨 Direct Emergency Assistance Protocol
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Role Navigation Ribbon -->
-        <nav class="role-ribbon">
+        <nav class="role-ribbon" style="display: none;">
             <button class="role-tab active" data-role="patient" onclick="App.quickLoginAs('patient')">
                 👤 Patient Dashboard
             </button>
@@ -86,8 +172,8 @@
             </button>
         </nav>
 
-        <!-- Live Token Ticker Bar (Visible to all) -->
-        <div class="token-ticker-card">
+        <!-- Live Token Ticker Bar (Visible to logged in roles) -->
+        <div class="token-ticker-card" style="display: none;">
             <div>
                 <span class="badge badge-warning" id="queuePauseBadge" style="display: none; margin-bottom: 8px;"></span>
                 <h2 style="font-size: 1.4rem;" data-i18n="live_token_title">Current Live Token Being Served</h2>
@@ -106,7 +192,7 @@
         </div>
 
         <!-- GPS Geofence & Proximity Detection Box -->
-        <div id="geofenceStatusBox" style="margin-bottom: 20px;">
+        <div id="geofenceStatusBox" style="margin-bottom: 20px; display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; background: #ffffff; border: 1px solid #cbd5e1; padding: 12px 18px; border-radius: 8px;">
                 <div>
                     <strong>📍 Location Awareness:</strong> Hospital Geofence monitoring is active.
@@ -120,7 +206,7 @@
         <!-- ==========================================================================
              VIEW 1: PATIENT DASHBOARD
              ========================================================================== -->
-        <section id="view_patient" class="dashboard-view">
+        <section id="view_patient" class="dashboard-view" style="display: none;">
             <!-- Active Token Card for current patient -->
             <div id="patientActiveTokenBox" style="display: none;"></div>
 
@@ -314,14 +400,14 @@
 
                     <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px;">
                         <button class="btn btn-success" onclick="App.doctorFinishConsultation()">
-                            Finalize Consultation & Dispatch Orders
+                            ✓ Finalize Consultation & Mark Doctor Free
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Doctor's Patient Waiting Queue -->
-            <div class="card">
+            <div class="card" style="margin-bottom: 20px;">
                 <div class="card-header">
                     <div class="card-title">Today's Consultation Queue</div>
                 </div>
@@ -340,6 +426,28 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Consulted Patients History for Doctor -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>✅</span> Consulted Patients Today (Removed from Active Room)
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Token</th>
+                                <th>Patient Name</th>
+                                <th>Room</th>
+                                <th>Completed Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="doctorConsultedTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
         </section>
 
 
@@ -347,6 +455,20 @@
              VIEW 3: STAFF & REGISTRATION DASHBOARD
              ========================================================================== -->
         <section id="view_staff" class="dashboard-view" style="display: none;">
+            <!-- Live OPD Doctor Rooms Availability & Triage Dispatch -->
+            <div class="card" style="margin-bottom: 24px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>👨‍⚕️</span> Live OPD Doctor Rooms Availability & Triage Dispatch
+                    </div>
+                    <span class="badge badge-info">Real-time Coordination</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #475569; margin-bottom: 14px;">
+                    When a doctor finalizes a consultation and becomes <strong>FREE</strong>, staff members can immediately dispatch the next waiting token into the doctor's room with automated audio broadcast.
+                </p>
+                <div id="staffDoctorRoomsGrid" class="doctor-rooms-grid"></div>
+            </div>
+
             <div class="dashboard-grid">
                 <!-- Walk-in Token Registration -->
                 <div class="card">
@@ -404,6 +526,29 @@
                             <button class="btn btn-success btn-sm" onclick="App.toggleQueuePause('resume')">Resume Queue</button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Consulted Patients History for Staff -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span>✅</span> Completed Consultations Today (Removed from OPD Queue)
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Token</th>
+                                <th>Patient Name</th>
+                                <th>Doctor</th>
+                                <th>Room</th>
+                                <th>Completed Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffConsultedTableBody"></tbody>
+                    </table>
                 </div>
             </div>
         </section>

@@ -320,6 +320,91 @@ def check_in_patient():
     return jsonify({"message": f"Check-in successful! Token: {token_num}", "token": token_doc})
 
 # ----------------- 5. Doctor Consultation Workflow -----------------
+@app.route("/api/doctors/status", methods=["GET"])
+def get_doctors_status():
+    """Returns live availability and consultation status of all OPD Doctors"""
+    docs_col = get_collection("doctors")
+    tokens_col = get_collection("tokens")
+    doctors = docs_col.find({"status": "active"})
+
+    results = []
+    for doc in doctors:
+        # Check if doctor has active patient in room
+        active_token = tokens_col.find_one({
+            "serviceCounter": doc.get("roomNumber", "Room 3"),
+            "status": "in_consultation"
+        })
+        is_free = active_token is None
+        doc_info = dict(doc)
+        doc_info["consultationStatus"] = "free" if is_free else "busy"
+        doc_info["currentPatient"] = active_token
+        results.append(doc_info)
+    return jsonify(results)
+
+@app.route("/api/staff/process-to-doctor", methods=["POST"])
+@require_auth(roles=["staff", "admin"])
+def staff_process_to_doctor():
+    """Staff dispatches next waiting token to an available / free Doctor Room"""
+    data = request.json or {}
+    token_num = data.get("tokenNumber")
+    doctor_id = data.get("doctorId")
+    lang = data.get("language", "en")
+
+    tokens_col = get_collection("tokens")
+    docs_col = get_collection("doctors")
+    queues_col = get_collection("queues")
+
+    doc = docs_col.find_one({"_id": doctor_id})
+    if not doc:
+        return jsonify({"error": "Doctor room not found"}), 404
+
+    room = doc.get("roomNumber", "OPD Room 3")
+
+    # If no specific token supplied, pick next waiting token for this department
+    if not token_num:
+        waiting = tokens_col.find_one({"departmentId": doc.get("departmentId"), "status": "waiting"})
+        if not waiting:
+            return jsonify({"error": f"No patients currently waiting for {doc.get('departmentName')}."}), 400
+        token_num = waiting["tokenNumber"]
+        token_doc = waiting
+    else:
+        token_doc = tokens_col.find_one({"tokenNumber": token_num})
+
+    if not token_doc:
+        return jsonify({"error": "Token not found"}), 404
+
+    # Assign token to doctor room
+    tokens_col.update_one({"tokenNumber": token_num}, {
+        "$set": {
+            "status": "in_consultation",
+            "serviceCounter": room,
+            "calledAt": datetime.utcnow().isoformat()
+        }
+    })
+
+    queues_col.update_one({"departmentId": doc.get("departmentId")}, {
+        "$set": {"currentToken": token_num},
+        "$inc": {"waitingCount": -1}
+    })
+
+    if lang == "hi":
+        announcement = f"टोकन नंबर {token_num}, कृपया {room} ({doc.get('name')}) में पधारें।"
+    elif lang == "gu":
+        announcement = f"ટોકન નંબર {token_num}, કૃપા કરીને {room} ({doc.get('name')}) માં જાવ."
+    else:
+        announcement = f"Token number {token_num}, please proceed to {room} for consultation with {doc.get('name')}."
+
+    log_audit(str(g.user["_id"]), g.user["email"], "staff", "PATIENT_PROCESSED_TO_DOCTOR", {
+        "token": token_num, "room": room, "doctor": doc.get("name")
+    })
+
+    return jsonify({
+        "message": f"Token {token_num} successfully assigned to {doc.get('name')} ({room})",
+        "announcementText": announcement,
+        "token": token_doc,
+        "doctor": doc
+    })
+
 @app.route("/api/doctor/queue", methods=["GET"])
 @require_auth(roles=["doctor", "admin"])
 def get_doctor_queue():
@@ -465,11 +550,36 @@ def doctor_finish_consultation():
     }
     bills_col.insert_one(bill_doc)
 
+    # 6. Record consultation entry
+    consultation_doc = {
+        "_id": str(uuid.uuid4()),
+        "tokenNumber": token_num,
+        "patientName": patient_name,
+        "doctorName": g.user.get("name", "Dr. Aarav Mehta"),
+        "departmentId": token_doc.get("departmentId", "dept_gen_med"),
+        "roomNumber": token_doc.get("serviceCounter", "OPD Room 3"),
+        "prescriptionId": rx_id,
+        "completedAt": datetime.utcnow().strftime("%I:%M %p"),
+        "status": "Consulted & Free"
+    }
+    get_collection("consultations").insert_one(consultation_doc)
+
     # Mark token served
     tokens_col.update_one({"tokenNumber": token_num}, {"$set": {"status": "served", "completedAt": datetime.utcnow().isoformat()}})
     log_audit(str(g.user["_id"]), g.user["email"], "doctor", "CONSULTATION_COMPLETED", {"rxId": rx_id, "token": token_num})
 
-    return jsonify({"message": "Consultation finalized, prescription and orders dispatched!", "prescription": prescription, "bill": bill_doc})
+    return jsonify({"message": "Consultation finalized, doctor is now FREE for next patient!", "prescription": prescription, "bill": bill_doc})
+
+@app.route("/api/doctor/consulted-today", methods=["GET"])
+def get_consulted_today():
+    """Returns list of patients successfully consulted today and removed from active queue"""
+    dept_id = request.args.get("departmentId")
+    query = {}
+    if dept_id:
+        query["departmentId"] = dept_id
+    records = get_collection("consultations").find(query)
+    records.sort(key=lambda x: x.get("completedAt", ""), reverse=True)
+    return jsonify(records)
 
 # ----------------- 6. Staff Operations & Audio Announcements -----------------
 @app.route("/api/staff/walkin-token", methods=["POST"])
